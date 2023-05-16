@@ -10,12 +10,16 @@ import java.time.LocalDate;
 
 public class Paciente {
     String nombreCompleto;
-    LocalDate fechaNacimiento;
+    String fechaNacimiento;
     String genero;
     String direccion;
     String numeroTelefono;
-
-    public Paciente(String nombreCompleto, LocalDate fechaNacimiento, String genero, String direccion, String numeroTelefono) {
+       
+    public Paciente(){
+        
+    }
+    
+    public Paciente(String nombreCompleto, String fechaNacimiento, String genero, String direccion, String numeroTelefono) {
         this.nombreCompleto = nombreCompleto;
         this.fechaNacimiento = fechaNacimiento;
         this.genero = genero;
@@ -31,11 +35,11 @@ public class Paciente {
         this.nombreCompleto = nombreCompleto;
     }
 
-    public LocalDate getFechaNacimiento() {
+    public String getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+    public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
