@@ -7,5 +7,7 @@
 package model;
 
 public class Paciente extends Persona {
-    
+    public Paciente(String nombreCompleto, String fechaNacimiento, String genero, String direccion, String numeroTelefono) {
+        super(nombreCompleto,fechaNacimiento,  genero,  direccion,  numeroTelefono);
+    }
 }

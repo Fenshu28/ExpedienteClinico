@@ -1,8 +1,8 @@
 /** ***************************************************
- * Autor: Cristopher Alexis Zarate Valencia          *
+ * Autor: Cristopher Alexis Zarate Valencia           *
  * Fecha de creación: 17 may 2023                     *
  * Fecha de actualización: 17 may 2023                *
- * Descripción: 
+ * Descripción: Clase con los atributos de una persona
  **************************************************** */
 
 package model;
