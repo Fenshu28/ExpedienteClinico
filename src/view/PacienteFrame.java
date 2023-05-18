@@ -9,19 +9,21 @@ package view;
 import java.util.List;
 import java.util.ArrayList;
 import controller.*;
+import java.util.HashMap;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Paciente;
 
 public class PacienteFrame extends javax.swing.JFrame {
-
-    int posX, posY;
-    private List<Paciente> pacientes = new ArrayList<>();
+    private int posX, posY;
+    private HashMap<String,Paciente> pacientes = new HashMap<String,Paciente>();
     private final DefaultTableModel modelo;
+    private String NSSact;
 
     public PacienteFrame() {
 
         initComponents();
-        modelo = (DefaultTableModel) jTable1.getModel();
+        modelo = (DefaultTableModel) tblRegistros.getModel();
     }
 
     @SuppressWarnings("unchecked")
@@ -32,6 +34,8 @@ public class PacienteFrame extends javax.swing.JFrame {
         btnCerrar = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         pnlMain = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        txtNss = new javax.swing.JFormattedTextField();
         jLabel1 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -41,10 +45,12 @@ public class PacienteFrame extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         cmbGenero = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        txtFecha2 = new javax.swing.JFormattedTextField();
+        txtTelefono = new javax.swing.JFormattedTextField();
         btnGuardar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblRegistros = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -98,19 +104,35 @@ public class PacienteFrame extends javax.swing.JFrame {
         pnlMain.setBackground(new java.awt.Color(255, 255, 255));
         pnlMain.setForeground(new java.awt.Color(102, 102, 102));
 
+        jLabel7.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel7.setLabelFor(txtNombre);
+        jLabel7.setText("NSS");
+
+        try {
+            txtNss.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtNss.setText("5616515616155");
+
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setLabelFor(txtNombre);
         jLabel1.setText("Nombre completo");
 
+        txtNombre.setText("tyhgjvbj");
+
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
         jLabel2.setLabelFor(txtNombre);
         jLabel2.setText("Direccion");
+
+        txtDireccion.setText("rextcfyvgbjh");
 
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
         jLabel3.setLabelFor(txtNombre);
         jLabel3.setText("Fecha de nacimiento");
 
         txtFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        txtFecha.setText("15/15/14");
 
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setLabelFor(txtNombre);
@@ -122,7 +144,12 @@ public class PacienteFrame extends javax.swing.JFrame {
         jLabel5.setLabelFor(txtNombre);
         jLabel5.setText("Teléfono");
 
-        txtFecha2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        try {
+            txtTelefono.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(###)-###-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtTelefono.setText("9849949489");
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -131,23 +158,52 @@ public class PacienteFrame extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        tblRegistros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nombre", "Genero", "Telefono"
+                "NSS", "Nombre", "Genero"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
-        jScrollPane1.setViewportView(jTable1);
+        tblRegistros.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblRegistrosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblRegistros);
+        if (tblRegistros.getColumnModel().getColumnCount() > 0) {
+            tblRegistros.getColumnModel().getColumn(0).setResizable(false);
+        }
 
         javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
         pnlMain.setLayout(pnlMainLayout);
@@ -157,42 +213,56 @@ public class PacienteFrame extends javax.swing.JFrame {
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlMainLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlMainLayout.createSequentialGroup()
+                                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(64, 64, 64)
+                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 92, Short.MAX_VALUE))
+                            .addGroup(pnlMainLayout.createSequentialGroup()
+                                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(pnlMainLayout.createSequentialGroup()
+                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(27, 27, 27)
+                                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(pnlMainLayout.createSequentialGroup()
+                                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(32, 32, 32)
+                                            .addComponent(cmbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(pnlMainLayout.createSequentialGroup()
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(54, 54, 54)
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(pnlMainLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(cmbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlMainLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlMainLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlMainLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(54, 54, 54)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlMainLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(64, 64, 64)
-                        .addComponent(txtFecha2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlMainLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlMainLayout.createSequentialGroup()
-                        .addGap(540, 540, 540)
-                        .addComponent(btnGuardar)))
-                .addContainerGap(7, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(pnlMainLayout.createSequentialGroup()
+                                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNss, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnActualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminar)))
+                .addContainerGap())
         );
         pnlMainLayout.setVerticalGroup(
             pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMainLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addContainerGap(9, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addGap(4, 4, 4)
+                .addComponent(txtNss, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel4))
@@ -217,12 +287,15 @@ public class PacienteFrame extends javax.swing.JFrame {
                     .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlMainLayout.createSequentialGroup()
                         .addGap(1, 1, 1)
-                        .addComponent(txtFecha2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(6, 6, 6)
+                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(btnGuardar)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnActualizar))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -258,18 +331,97 @@ public class PacienteFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarMouseClicked
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        Paciente paciente;
-        paciente = new Paciente(txtNombre.getText(), txtFecha.getText(),
-                cmbGenero.getItemAt(cmbGenero.getSelectedIndex()),
-                txtDireccion.getText(), txtFecha2.getText());
-        paciente.setNombreCompleto(txtNombre.getText());
-        paciente.setDireccion(txtDireccion.getText());
-
-        pacientes.add(paciente);
-        MostrarTabla();
-
+        guardarDatos();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void tblRegistrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRegistrosMouseClicked
+        NSSact = modelo.getValueAt(
+                tblRegistros.getSelectedRow(),0).toString();
+    }//GEN-LAST:event_tblRegistrosMouseClicked
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        actualizarDatos();
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        elimimnarDatos();
+    }//GEN-LAST:event_btnEliminarActionPerformed
+    
+    void MostrarTabla() {
+        modelo.setRowCount(0);
+        for (String nssItem : pacientes.keySet()) {
+            Object fila[] = new Object[3];
+
+            fila[0] = pacientes.get(nssItem).getNss();
+            fila[1] = pacientes.get(nssItem).getNombreCompleto();
+            fila[2] = pacientes.get(nssItem).getGenero();
+            modelo.addRow(fila);
+
+        }
+    }
+    
+    void guardarDatos(){
+        try {
+            Paciente paciente = crearPaciente();
+            
+            pacientes.put(NSSact,paciente);
+            MostrarTabla();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    void recuperarDatos(){
+        if(pacientes.containsKey(NSSact)){
+            Paciente paciente = pacientes.get(NSSact);
+            txtNss.setText(NSSact);
+            txtNombre.setText(paciente.getNombreCompleto());
+            txtDireccion.setText(paciente.getDireccion());
+            txtTelefono.setText(paciente.getNumeroTelefono());
+            txtFecha.setText(paciente.getFechaNacimiento());
+            
+            MostrarTabla();
+        }else{
+            JOptionPane.showMessageDialog(this, 
+                    "Este paciente no existe", "Error de búsqueda", 
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    void elimimnarDatos(){
+        if(pacientes.containsKey(NSSact)){
+            Paciente paciente = pacientes.remove(NSSact);
+            
+            MostrarTabla();
+        }else{
+            JOptionPane.showMessageDialog(this, 
+                    "Este paciente no existe", "Error de búsqueda", 
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    void actualizarDatos(){
+        if(pacientes.containsKey(NSSact)){
+            Paciente paciente = pacientes.replace(NSSact,crearPaciente());
+            
+            MostrarTabla();
+        }else{
+            JOptionPane.showMessageDialog(this, 
+                    "Este paciente no existe", "Error de búsqueda", 
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    Paciente crearPaciente(){
+        Paciente paciente;
+        NSSact =txtNss.getText();
+        paciente = new Paciente(NSSact, 
+                txtNombre.getText(),txtFecha.getText(),
+                cmbGenero.getItemAt(cmbGenero.getSelectedIndex()),
+                txtDireccion.getText(), txtTelefono.getText());
+        return paciente;
+    }
+    
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -278,21 +430,12 @@ public class PacienteFrame extends javax.swing.JFrame {
         });
     }
 
-    void MostrarTabla() {
-        modelo.setRowCount(0);
-        for (Paciente paciente : pacientes) {
-            Object fila[] = new Object[3];
 
-            fila[0] = paciente.getNombreCompleto();
-            fila[1] = paciente.getDireccion();
-            fila[2] = paciente.getGenero();
-            modelo.addRow(fila);
-
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JLabel btnCerrar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<String> cmbGenero;
     private javax.swing.JLabel jLabel1;
@@ -301,13 +444,15 @@ public class PacienteFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel pnlMain;
+    private javax.swing.JTable tblRegistros;
     private javax.swing.JPanel topBar;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JFormattedTextField txtFecha;
-    private javax.swing.JFormattedTextField txtFecha2;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JFormattedTextField txtNss;
+    private javax.swing.JFormattedTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }
