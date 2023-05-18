@@ -8,7 +8,8 @@ package model;
 
 public class Paciente extends Persona {
     private String nss;
-    public Paciente(String nss, String nombreCompleto, String fechaNacimiento, String genero, String direccion, String numeroTelefono) {
+    public Paciente(String nss, String nombreCompleto, String fechaNacimiento, 
+            String genero, String direccion, String numeroTelefono) {
         super(nombreCompleto, fechaNacimiento, genero, direccion, numeroTelefono);
         this.nss = nss;
     }

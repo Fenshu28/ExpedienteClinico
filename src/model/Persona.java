@@ -19,7 +19,8 @@ public class Persona {
         
     }
     
-    public Persona(String nombreCompleto, String fechaNacimiento, String genero, String direccion, String numeroTelefono) {
+    public Persona(String nombreCompleto, String fechaNacimiento, String genero, 
+            String direccion, String numeroTelefono) {
         this.nombreCompleto = nombreCompleto;
         this.fechaNacimiento = fechaNacimiento;
         this.genero = genero;
