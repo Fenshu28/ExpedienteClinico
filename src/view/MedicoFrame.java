@@ -41,7 +41,8 @@ public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
     private void setPropios(){
         this.lbTitulo.setText("Medicos");
         this.lbId.setText("RFC");
-        this.tblRegistros.getColumn(0).setHeaderValue("RFC");
+        this.tblRegistros.getColumnModel().getColumn(0).setHeaderValue("RFC");
+        this.tblRegistros.getTableHeader().repaint();
     }
     
     public void MostrarTabla() {

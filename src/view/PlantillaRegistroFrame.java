@@ -6,8 +6,10 @@
  **************************************************** */
 package view;
 
+import java.awt.Color;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import model.Paciente;
 
@@ -18,9 +20,9 @@ public class PlantillaRegistroFrame extends javax.swing.JFrame {
     protected String idAct;
 
     public PlantillaRegistroFrame() {
-
         initComponents();
         modelo = (DefaultTableModel) tblRegistros.getModel();
+        MostrarTabla();
     }
 
     @SuppressWarnings("unchecked")
@@ -66,13 +68,15 @@ public class PlantillaRegistroFrame extends javax.swing.JFrame {
             }
         });
 
-        btnCerrar.setBackground(new java.awt.Color(255, 51, 51));
         btnCerrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cerrar.png"))); // NOI18N
         btnCerrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnCerrarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCerrarMouseEntered(evt);
             }
         });
 
@@ -313,7 +317,7 @@ public class PlantillaRegistroFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_topBarMouseDragged
 
     private void btnCerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseClicked
-        System.exit(0);
+        this.dispose();
     }//GEN-LAST:event_btnCerrarMouseClicked
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -333,6 +337,10 @@ public class PlantillaRegistroFrame extends javax.swing.JFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         elimimnarDatos();
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseEntered
+        btnCerrar.setBackground(Color.RED);
+    }//GEN-LAST:event_btnCerrarMouseEntered
     
     public void MostrarTabla() {
         
@@ -352,6 +360,14 @@ public class PlantillaRegistroFrame extends javax.swing.JFrame {
     
     public void actualizarDatos(){
         
+    }
+    
+    private void limpiarFrame(){
+        for(Object t: this.getComponents()){    
+//            if(t.){
+//                t = (JTextField) t;
+//            }                
+        }
     }
     
     public static void main(String args[]) {
