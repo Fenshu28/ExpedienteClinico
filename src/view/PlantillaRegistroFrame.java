@@ -113,12 +113,7 @@ public class PlantillaRegistroFrame extends javax.swing.JFrame {
         lbId.setLabelFor(txtNombre);
         lbId.setText("ID");
 
-        try {
-            txtId.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtId.setText("5616515616155");
+        txtId.setText("");
 
         lbNombre.setForeground(new java.awt.Color(102, 102, 102));
         lbNombre.setLabelFor(txtNombre);

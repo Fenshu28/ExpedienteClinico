@@ -1,6 +1,14 @@
+/** ***************************************************
+ * Autor: Cristopher Alexis Zarate Valencia          *
+ * Fecha de creación: 21/05/2023                     *
+ * Fecha de actualización: 21/05/2023                *
+ * Descripción: Vista para el registro del medico
+ **************************************************** */
+
 package view;
 
 import controller.Registros;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import model.Medico;
 
@@ -38,7 +46,8 @@ public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
         });
     }
     
-    private void setPropios(){
+    // Establece los textos en labels que son propios del Frame
+    private void setPropios(){        
         this.lbTitulo.setText("Medicos");
         this.lbId.setText("RFC");
         this.tblRegistros.getColumnModel().getColumn(0).setHeaderValue("RFC");
