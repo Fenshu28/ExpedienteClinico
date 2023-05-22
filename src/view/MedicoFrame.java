@@ -1,18 +1,11 @@
-/** ***************************************************
- * Autor: Cristopher Alexis Zarate Valencia          *
- * Fecha de creación: 21/05/2023                     *
- * Fecha de actualización: 21/05/2023                *
- * Descripción: Vista para el registro del paciente
- **************************************************** */
 package view;
 
-import java.util.HashMap;
-import javax.swing.JOptionPane;
-import model.Paciente;
 import controller.Registros;
+import javax.swing.JOptionPane;
+import model.Medico;
 
-public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
-    public PacienteFrame() {
+public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
+    public MedicoFrame() {
         initComponents();
         setPropios();
     }
@@ -40,96 +33,97 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PacienteFrame().setVisible(true);
+                new MedicoFrame().setVisible(true);
             }
         });
     }
     
     private void setPropios(){
-        this.lbTitulo.setText("Paciente");
-        this.lbId.setText("NSS");
+        this.lbTitulo.setText("Medicos");
+        this.lbId.setText("RFC");
+        this.tblRegistros.getColumn(0).setHeaderValue("RFC");
     }
     
     public void MostrarTabla() {
         modelo.setRowCount(0);
-        for (String nssItem : pacientes.keySet()) {
+        for (String nssItem : medicos.keySet()) {
             Object fila[] = new Object[3];
 
-            fila[0] = pacientes.get(nssItem).getNss();
-            fila[1] = pacientes.get(nssItem).getNombreCompleto();
-            fila[2] = pacientes.get(nssItem).getGenero();
+            fila[0] = medicos.get(nssItem).getRFC();
+            fila[1] = medicos.get(nssItem).getNombreCompleto();
+            fila[2] = medicos.get(nssItem).getGenero();
             modelo.addRow(fila);
 
         }
     }
     
     public void guardarDatos(){
-        if(!pacientes.containsKey(txtId.getText())){
+        if(!medicos.containsKey(txtId.getText())){
             try {
-                Paciente paciente = crearPaciente();
+                Medico medico = crearMedico();
 
-                pacientes.put(idAct,paciente);
+                medicos.put(idAct,medico);
                 MostrarTabla();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }else{
             JOptionPane.showMessageDialog(this, 
-                    "Este paciente ya existe", "Error de inserción", 
+                    "Este medico ya existe", "Error de inserción", 
                     JOptionPane.WARNING_MESSAGE);
         }
         
     }
     
     public void recuperarDatos(){
-        if(pacientes.containsKey(idAct)){
-            Paciente paciente = pacientes.get(idAct);
+        if(medicos.containsKey(idAct)){
+            Medico medico = medicos.get(idAct);
             txtId.setText(idAct);
-            txtNombre.setText(paciente.getNombreCompleto());
-            txtDireccion.setText(paciente.getDireccion());
-            txtTelefono.setText(paciente.getNumeroTelefono());
-            txtFecha.setText(paciente.getFechaNacimiento());
+            txtNombre.setText(medico.getNombreCompleto());
+            txtDireccion.setText(medico.getDireccion());
+            txtTelefono.setText(medico.getNumeroTelefono());
+            txtFecha.setText(medico.getFechaNacimiento());
             
             MostrarTabla();
         }else{
             JOptionPane.showMessageDialog(this, 
-                    "Este paciente no existe", "Error de búsqueda", 
+                    "Este medico no existe", "Error de búsqueda", 
                     JOptionPane.WARNING_MESSAGE);
         }
     }
     
     public void elimimnarDatos(){
-        if(pacientes.containsKey(idAct)){
-            Paciente paciente = pacientes.remove(idAct);
+        if(medicos.containsKey(idAct)){
+            Medico medico = medicos.remove(idAct);
             
             MostrarTabla();
         }else{
             JOptionPane.showMessageDialog(this, 
-                    "Este paciente no existe", "Error de búsqueda", 
+                    "Este medico no existe", "Error de búsqueda", 
                     JOptionPane.WARNING_MESSAGE);
         }
     }
     
     public void actualizarDatos(){
-        if(pacientes.containsKey(idAct)){
-            Paciente paciente = pacientes.replace(idAct,crearPaciente());
+        if(medicos.containsKey(idAct)){
+            Medico medico = medicos.replace(idAct,crearMedico());
             
             MostrarTabla();
         }else{
             JOptionPane.showMessageDialog(this, 
-                    "Este paciente no existe", "Error de búsqueda", 
+                    "Este medico no existe", "Error de búsqueda", 
                     JOptionPane.WARNING_MESSAGE);
         }
     }
     
-    Paciente crearPaciente(){
-        Paciente paciente;
+    Medico crearMedico(){
+        Medico medico;
         idAct =txtId.getText();
-        paciente = new Paciente(idAct, txtNombre.getText(),
+        medico = new Medico(idAct, txtNombre.getText(),
                 txtFecha.getText(),
                 cmbGenero.getItemAt(cmbGenero.getSelectedIndex()),
                 txtDireccion.getText(), txtTelefono.getText());
-        return paciente;
+        return medico;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

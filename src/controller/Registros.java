@@ -3,10 +3,10 @@ package controller;
 
 
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.HashMap;
 import model.*;
 
-public class Registros {
-    private List<Paciente> pacientes = new ArrayList<>();
+public interface Registros {
+    HashMap<String,Paciente> pacientes = new HashMap<>();
+    HashMap<String,Medico> medicos = new HashMap<>();    
 }
