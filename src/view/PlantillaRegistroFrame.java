@@ -7,11 +7,11 @@
 package view;
 
 import java.awt.Color;
-import java.util.HashMap;
+import java.awt.Component;
+import java.awt.Container;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import model.Paciente;
 
 public class PlantillaRegistroFrame extends javax.swing.JFrame {
     private int posX, posY;
@@ -23,6 +23,7 @@ public class PlantillaRegistroFrame extends javax.swing.JFrame {
         initComponents();
         modelo = (DefaultTableModel) tblRegistros.getModel();
         MostrarTabla();
+        limpiarFrame();
     }
 
     @SuppressWarnings("unchecked")
@@ -113,7 +114,7 @@ public class PlantillaRegistroFrame extends javax.swing.JFrame {
         lbId.setLabelFor(txtNombre);
         lbId.setText("ID");
 
-        txtId.setText("");
+        txtId.setText("nsvdnsvd");
 
         lbNombre.setForeground(new java.awt.Color(102, 102, 102));
         lbNombre.setLabelFor(txtNombre);
@@ -330,7 +331,11 @@ public class PlantillaRegistroFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        elimimnarDatos();
+        if(JOptionPane.showConfirmDialog (this, 
+                "¿Estas seguro de eliminar este registro?", 
+                "Elmimnando...", JOptionPane.YES_NO_OPTION,
+                JOptionPane.INFORMATION_MESSAGE) == 0)
+            elimimnarDatos();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseEntered
@@ -358,10 +363,13 @@ public class PlantillaRegistroFrame extends javax.swing.JFrame {
     }
     
     private void limpiarFrame(){
-        for(Object t: this.getComponents()){    
-//            if(t.){
-//                t = (JTextField) t;
-//            }                
+        Component[] components = pnlMain.getComponents();
+        for (Component component : components) {
+            if (component instanceof JTextField) {
+                JTextField textField = (JTextField) component;
+                // Realiza la acción deseada con el JTextField encontrado
+                textField.setText("");
+            }
         }
     }
     

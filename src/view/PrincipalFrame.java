@@ -7,6 +7,11 @@
 
 package view;
 
+import java.awt.Dialog;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 public class PrincipalFrame extends javax.swing.JFrame {
     private int posX, posY;
     
@@ -175,8 +180,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void btnMedicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMedicoMouseClicked
         MedicoFrame ventanaMedico = new MedicoFrame();
         ventanaMedico.setVisible(true);
+        
     }//GEN-LAST:event_btnMedicoMouseClicked
-
+    
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

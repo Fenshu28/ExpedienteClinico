@@ -67,7 +67,8 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
         if(!pacientes.containsKey(txtId.getText())){
             try {
                 Paciente paciente = crearPaciente();
-
+                idAct = txtId.getText();
+                
                 pacientes.put(idAct,paciente);
                 MostrarTabla();
             } catch (Exception e) {

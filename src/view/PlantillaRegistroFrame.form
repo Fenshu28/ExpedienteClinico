@@ -246,7 +246,7 @@
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="txtId">
           <Properties>
-            <Property name="text" type="java.lang.String" value=""/>
+            <Property name="text" type="java.lang.String" value="nsvdnsvd"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
