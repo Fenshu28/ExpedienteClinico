@@ -6,16 +6,24 @@
  **************************************************** */
 package view;
 
-import java.util.HashMap;
 import javax.swing.JOptionPane;
 import model.Paciente;
 import controller.Registros;
+import java.awt.Frame;
 
 public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
+
+    public PacienteFrame(Frame owner, String title, boolean modal) {
+        super(owner, title, modal);
+//        setPropios();
+    }
+    
     public PacienteFrame() {
         initComponents();
         setPropios();
     }
+    
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -45,11 +53,20 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
         });
     }
     
+    /**
+     * Define propedades que los formularios tienen propiamente y los sustituye
+     * por los predefinidos.
+     */
     private void setPropios(){
         this.lbTitulo.setText("Paciente");
         this.lbId.setText("NSS");
+        this.tblRegistros.getColumnModel().getColumn(0).setHeaderValue("RFC");
+        this.tblRegistros.getTableHeader().repaint();
     }
     
+    /**
+     * Actualiza la tabla
+     */
     public void MostrarTabla() {
         modelo.setRowCount(0);
         for (String nssItem : pacientes.keySet()) {
@@ -63,6 +80,9 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
         }
     }
     
+    /**
+     * Inserta un paciente en el hashmap.
+     */
     public void guardarDatos(){
         if(!pacientes.containsKey(txtId.getText())){
             try {
@@ -82,6 +102,9 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
         
     }
     
+    /**
+     * Recupera un paciente y rellena los campos en el form
+     */
     public void recuperarDatos(){
         if(pacientes.containsKey(idAct)){
             Paciente paciente = pacientes.get(idAct);
@@ -99,6 +122,9 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
         }
     }
     
+    /**
+     * Elimina un paciente del hashmap.
+     */
     public void elimimnarDatos(){
         if(pacientes.containsKey(idAct)){
             Paciente paciente = pacientes.remove(idAct);
@@ -111,6 +137,9 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
         }
     }
     
+    /**
+     * Actualiza un paciente en el hashmap.
+     */
     public void actualizarDatos(){
         if(pacientes.containsKey(idAct)){
             Paciente paciente = pacientes.replace(idAct,crearPaciente());
@@ -123,6 +152,12 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
         }
     }
     
+    /**
+     * Crea la instancia de un paciente inicializandolo con la información
+     * de los campos
+     * @return 
+     * El paciente ya instanciado para ser insertado o actuializado en el hashmap
+     */
     Paciente crearPaciente(){
         Paciente paciente;
         idAct =txtId.getText();

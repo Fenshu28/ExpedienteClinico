@@ -9,11 +9,12 @@ package view;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Frame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-public class PlantillaRegistroFrame extends javax.swing.JFrame {
+public class PlantillaRegistroFrame extends javax.swing.JDialog {
     private int posX, posY;
     
     protected DefaultTableModel modelo;
@@ -26,6 +27,10 @@ public class PlantillaRegistroFrame extends javax.swing.JFrame {
         limpiarFrame();
     }
 
+    public PlantillaRegistroFrame(Frame owner, String title, boolean modal) {
+        super(owner, title, modal);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -178,11 +183,11 @@ public class PlantillaRegistroFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "NSS", "Nombre", "Genero"
+                "ID", "Nombre", "Genero"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false
@@ -215,10 +220,6 @@ public class PlantillaRegistroFrame extends javax.swing.JFrame {
                     .addGroup(pnlMainLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlMainLayout.createSequentialGroup()
-                                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(64, 64, 64)
-                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,7 +235,11 @@ public class PlantillaRegistroFrame extends javax.swing.JFrame {
                                     .addGroup(pnlMainLayout.createSequentialGroup()
                                         .addComponent(lbFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(54, 54, 54)
-                                        .addComponent(lbTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(lbTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(pnlMainLayout.createSequentialGroup()
+                                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(64, 64, 64)
+                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pnlMainLayout.createSequentialGroup()
                         .addContainerGap()
@@ -318,6 +323,8 @@ public class PlantillaRegistroFrame extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         guardarDatos();
+        limpiarFrame();
+        txtId.requestFocus();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void tblRegistrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRegistrosMouseClicked
@@ -328,14 +335,19 @@ public class PlantillaRegistroFrame extends javax.swing.JFrame {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         actualizarDatos();
+        limpiarFrame();
+        txtId.requestFocus();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         if(JOptionPane.showConfirmDialog (this, 
                 "¿Estas seguro de eliminar este registro?", 
                 "Elmimnando...", JOptionPane.YES_NO_OPTION,
-                JOptionPane.INFORMATION_MESSAGE) == 0)
+                JOptionPane.INFORMATION_MESSAGE) == 0){
             elimimnarDatos();
+            limpiarFrame();
+            txtId.requestFocus();
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseEntered

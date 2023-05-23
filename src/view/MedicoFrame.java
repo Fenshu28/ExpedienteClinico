@@ -8,7 +8,6 @@
 package view;
 
 import controller.Registros;
-import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import model.Medico;
 
@@ -46,7 +45,10 @@ public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
         });
     }
     
-    // Establece los textos en labels que son propios del Frame
+    /**
+     * Define propedades que los formularios tienen propiamente y los sustituye
+     * por los predefinidos.
+     */
     private void setPropios(){        
         this.lbTitulo.setText("Medicos");
         this.lbId.setText("RFC");
@@ -54,6 +56,9 @@ public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
         this.tblRegistros.getTableHeader().repaint();
     }
     
+    /**
+     * Actualiza la tabla
+     */
     public void MostrarTabla() {
         modelo.setRowCount(0);
         for (String nssItem : medicos.keySet()) {
@@ -67,6 +72,9 @@ public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
         }
     }
     
+    /**
+     * Inserta un médico en el hashmap.
+     */
     public void guardarDatos(){
         if(!medicos.containsKey(txtId.getText())){
             try {
@@ -85,6 +93,9 @@ public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
         
     }
     
+    /**
+     * Recupera un médico y rellena los campos en el form
+     */
     public void recuperarDatos(){
         if(medicos.containsKey(idAct)){
             Medico medico = medicos.get(idAct);
@@ -102,6 +113,9 @@ public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
         }
     }
     
+    /**
+     * Elimina un médico del hashmap.
+     */
     public void elimimnarDatos(){
         if(medicos.containsKey(idAct)){
             Medico medico = medicos.remove(idAct);
@@ -114,6 +128,9 @@ public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
         }
     }
     
+    /**
+     * Actualiza un médico en el hashmap.
+     */
     public void actualizarDatos(){
         if(medicos.containsKey(idAct)){
             Medico medico = medicos.replace(idAct,crearMedico());
@@ -126,6 +143,12 @@ public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
         }
     }
     
+    /**
+     * Crea la instancia de un médico inicializandolo con la información
+     * de los campos
+     * @return 
+     * El médico ya instanciado para ser insertado o actuializado en el hashmap
+     */
     Medico crearMedico(){
         Medico medico;
         idAct =txtId.getText();

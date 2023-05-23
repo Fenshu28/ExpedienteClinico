@@ -173,7 +173,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_pnlArrMouseDragged
 
     private void btnPacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPacienteMouseClicked
-        PacienteFrame ventanaPaciente = new PacienteFrame();
+        PacienteFrame ventanaPaciente = new PacienteFrame(this, "", true);
         ventanaPaciente.setVisible(true);
     }//GEN-LAST:event_btnPacienteMouseClicked
 
