@@ -6,7 +6,7 @@
  *      clinicos personales.
  **************************************************** */
 
-package model;
+package entity;
 
 import java.util.List;
 

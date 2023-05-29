@@ -4,7 +4,7 @@
  * Fecha de actualización: 22/03/2023                *
  * Descripción: Clase para el paciente		 
  *****************************************************/
-package model;
+package entity;
 
 import java.util.HashMap;
 

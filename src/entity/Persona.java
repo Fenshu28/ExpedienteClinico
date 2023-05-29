@@ -5,7 +5,7 @@
  * Descripción: Clase con los atributos de una persona
  **************************************************** */
 
-package model;
+package entity;
 
 
 public class Persona {

@@ -5,7 +5,7 @@
  * Descripción: Clase Clase para el medico
  **************************************************** */
 
-package model;
+package entity;
 
 
 public class Medico extends Persona{

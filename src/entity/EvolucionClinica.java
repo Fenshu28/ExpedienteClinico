@@ -5,9 +5,9 @@
  * Descripción: 
  **************************************************** */
 
-package model;
+package entity;
 
 
-public class Tratamiento {
+public class EvolucionClinica {
 
 }

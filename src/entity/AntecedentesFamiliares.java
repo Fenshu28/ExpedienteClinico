@@ -5,7 +5,7 @@
  * Descripción: 
  **************************************************** */
 
-package model;
+package entity;
 
 
 public class AntecedentesFamiliares {

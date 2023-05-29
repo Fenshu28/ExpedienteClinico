@@ -2,14 +2,14 @@
  * Autor: Cristopher Alexis Zarate Valencia          *
  * Fecha de creación: 21/05/2023                     *
  * Fecha de actualización: 21/05/2023                *
- * Descripción: Vista para el registro del medico
+ * Descripción: Vista para el registro del medico.
  **************************************************** */
 
 package view;
 
 import controller.Registros;
 import javax.swing.JOptionPane;
-import model.Medico;
+import entity.Medico;
 
 public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
     public MedicoFrame() {

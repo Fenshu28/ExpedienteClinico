@@ -2,19 +2,18 @@
  * Autor: Cristopher Alexis Zarate Valencia          *
  * Fecha de creación: 21/03/2023                     *
  * Fecha de actualización: 22/03/2023                *
- * Descripción: Vista para el registro del paciente
+ * Descripción: Vista para el registro del paciente.
  **************************************************** */
 package view;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Frame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-public class PlantillaRegistroFrame extends javax.swing.JDialog {
+public abstract class PlantillaRegistroFrame extends javax.swing.JDialog {
     private int posX, posY;
     
     protected DefaultTableModel modelo;
@@ -354,25 +353,15 @@ public class PlantillaRegistroFrame extends javax.swing.JDialog {
         btnCerrar.setBackground(Color.RED);
     }//GEN-LAST:event_btnCerrarMouseEntered
     
-    public void MostrarTabla() {
-        
-    }
+    public abstract void MostrarTabla() ;
     
-    public void guardarDatos(){
-        
-    }
+    public abstract void guardarDatos();
     
-    public void recuperarDatos(){
-        
-    }
+    public abstract void recuperarDatos();
     
-    public void elimimnarDatos(){
-        
-    }
+    public abstract void elimimnarDatos();
     
-    public void actualizarDatos(){
-        
-    }
+    public abstract void actualizarDatos();
     
     private void limpiarFrame(){
         Component[] components = pnlMain.getComponents();
@@ -385,13 +374,13 @@ public class PlantillaRegistroFrame extends javax.swing.JDialog {
         }
     }
     
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PlantillaRegistroFrame().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new PlantillaRegistroFrame().setVisible(true);
+//            }
+//        });
+//    }
 
 
 

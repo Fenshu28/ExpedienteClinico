@@ -2,19 +2,20 @@
  * Autor: Cristopher Alexis Zarate Valencia          *
  * Fecha de creación: 21/05/2023                     *
  * Fecha de actualización: 21/05/2023                *
- * Descripción: Vista para el registro del paciente
+ * Descripción: Vista para el registro del paciente.
  **************************************************** */
 package view;
 
 import javax.swing.JOptionPane;
-import model.Paciente;
-import controller.Registros;
+import entity.Paciente;
+import controller.*;
 import java.awt.Frame;
 
 public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
-
+    PacienteController controlador = new PacienteController();
+    
     public PacienteFrame(Frame owner, String title, boolean modal) {
-        super(owner, title, modal);
+        super(owner, title, modal);        
 //        setPropios();
     }
     
@@ -67,6 +68,7 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
     /**
      * Actualiza la tabla
      */
+    @Override
     public void MostrarTabla() {
         modelo.setRowCount(0);
         for (String nssItem : pacientes.keySet()) {
@@ -83,6 +85,7 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
     /**
      * Inserta un paciente en el hashmap.
      */
+    @Override
     public void guardarDatos(){
         if(!pacientes.containsKey(txtId.getText())){
             try {
@@ -105,6 +108,7 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
     /**
      * Recupera un paciente y rellena los campos en el form
      */
+    @Override
     public void recuperarDatos(){
         if(pacientes.containsKey(idAct)){
             Paciente paciente = pacientes.get(idAct);
@@ -125,9 +129,10 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
     /**
      * Elimina un paciente del hashmap.
      */
+    @Override
     public void elimimnarDatos(){
         if(pacientes.containsKey(idAct)){
-            Paciente paciente = pacientes.remove(idAct);
+            pacientes.remove(idAct);
             
             MostrarTabla();
         }else{
@@ -140,9 +145,10 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
     /**
      * Actualiza un paciente en el hashmap.
      */
+    @Override
     public void actualizarDatos(){
         if(pacientes.containsKey(idAct)){
-            Paciente paciente = pacientes.replace(idAct,crearPaciente());
+            pacientes.replace(idAct,crearPaciente());
             
             MostrarTabla();
         }else{

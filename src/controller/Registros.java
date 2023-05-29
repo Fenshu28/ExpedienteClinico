@@ -3,8 +3,9 @@ package controller;
 
 
 
+import entity.Paciente;
+import entity.Medico;
 import java.util.HashMap;
-import model.*;
 
 public interface Registros {
     HashMap<String,Paciente> pacientes = new HashMap<>();
