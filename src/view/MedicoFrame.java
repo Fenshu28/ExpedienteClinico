@@ -7,11 +7,13 @@
 
 package view;
 
-import controller.Registros;
+import controller.*;
 import javax.swing.JOptionPane;
 import entity.Medico;
 
 public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
+    MedicoController controlador = new MedicoController();
+    
     public MedicoFrame() {
         initComponents();
         setPropios();
