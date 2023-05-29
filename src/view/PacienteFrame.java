@@ -14,12 +14,9 @@ import java.awt.Frame;
 public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
     PacienteController controlador = new PacienteController();
     
-    public PacienteFrame(Frame owner, String title, boolean modal) {
-        super(owner, title, modal);        
-//        setPropios();
-    }
     
     public PacienteFrame() {
+        super();
         initComponents();
         setPropios();
     }

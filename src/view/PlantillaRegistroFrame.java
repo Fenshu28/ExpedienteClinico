@@ -8,12 +8,12 @@ package view;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Frame;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-public abstract class PlantillaRegistroFrame extends javax.swing.JDialog {
+public abstract class PlantillaRegistroFrame extends JFrame{
     private int posX, posY;
     
     protected DefaultTableModel modelo;
@@ -26,9 +26,6 @@ public abstract class PlantillaRegistroFrame extends javax.swing.JDialog {
         limpiarFrame();
     }
 
-    public PlantillaRegistroFrame(Frame owner, String title, boolean modal) {
-        super(owner, title, modal);
-    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
