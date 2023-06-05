@@ -6,6 +6,16 @@
  **************************************************** */
 package model;
 
+import entity.Paciente;
+import java.util.HashMap;
+import javax.swing.table.DefaultTableModel;
+
 public interface IPacienteModel {
+    HashMap<String,Paciente> pacientes = new HashMap<>();
     
+    void agregarRegistro(Paciente paciente);
+    void eliminarRegistro(String id);
+    void actualizarRegistro(Paciente paciente);
+    void mostrarRegistros(DefaultTableModel modeloTabla);
+    Paciente recuperarRegistro(String id);
 }

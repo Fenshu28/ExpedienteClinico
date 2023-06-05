@@ -9,11 +9,9 @@ package view;
 import javax.swing.JOptionPane;
 import entity.Paciente;
 import controller.*;
-import java.awt.Frame;
 
 public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
-    PacienteController controlador = new PacienteController();
-    
+    PacienteController controlador = new PacienteController();    
     
     public PacienteFrame() {
         super();
@@ -67,16 +65,7 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
      */
     @Override
     public void MostrarTabla() {
-        modelo.setRowCount(0);
-        for (String nssItem : pacientes.keySet()) {
-            Object fila[] = new Object[3];
-
-            fila[0] = pacientes.get(nssItem).getNss();
-            fila[1] = pacientes.get(nssItem).getNombreCompleto();
-            fila[2] = pacientes.get(nssItem).getGenero();
-            modelo.addRow(fila);
-
-        }
+        
     }
     
     /**
@@ -84,21 +73,7 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
      */
     @Override
     public void guardarDatos(){
-        if(!pacientes.containsKey(txtId.getText())){
-            try {
-                Paciente paciente = crearPaciente();
-                idAct = txtId.getText();
-                
-                pacientes.put(idAct,paciente);
-                MostrarTabla();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }else{
-            JOptionPane.showMessageDialog(this, 
-                    "Este paciente ya existe", "Error de inserción", 
-                    JOptionPane.WARNING_MESSAGE);
-        }
+        
         
     }
     
@@ -107,20 +82,7 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
      */
     @Override
     public void recuperarDatos(){
-        if(pacientes.containsKey(idAct)){
-            Paciente paciente = pacientes.get(idAct);
-            txtId.setText(idAct);
-            txtNombre.setText(paciente.getNombreCompleto());
-            txtDireccion.setText(paciente.getDireccion());
-            txtTelefono.setText(paciente.getNumeroTelefono());
-            txtFecha.setText(paciente.getFechaNacimiento());
-            
-            MostrarTabla();
-        }else{
-            JOptionPane.showMessageDialog(this, 
-                    "Este paciente no existe", "Error de búsqueda", 
-                    JOptionPane.WARNING_MESSAGE);
-        }
+        
     }
     
     /**
@@ -128,15 +90,7 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
      */
     @Override
     public void elimimnarDatos(){
-        if(pacientes.containsKey(idAct)){
-            pacientes.remove(idAct);
-            
-            MostrarTabla();
-        }else{
-            JOptionPane.showMessageDialog(this, 
-                    "Este paciente no existe", "Error de búsqueda", 
-                    JOptionPane.WARNING_MESSAGE);
-        }
+        
     }
     
     /**
@@ -144,15 +98,7 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
      */
     @Override
     public void actualizarDatos(){
-        if(pacientes.containsKey(idAct)){
-            pacientes.replace(idAct,crearPaciente());
-            
-            MostrarTabla();
-        }else{
-            JOptionPane.showMessageDialog(this, 
-                    "Este paciente no existe", "Error de búsqueda", 
-                    JOptionPane.WARNING_MESSAGE);
-        }
+        
     }
     
     /**
