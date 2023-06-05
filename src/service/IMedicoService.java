@@ -7,7 +7,14 @@
 
 package service;
 
+import entity.Medico;
+import javax.swing.table.DefaultTableModel;
+
 
 public interface IMedicoService {
-
+    void agregarRegistro(Medico medico);
+    void eliminarRegistro(String id);
+    void actualizarRegistro(Medico medico);
+    void mostrarRegistros(DefaultTableModel modeloTabla);
+    Medico recuperarRegistro(String id);
 }

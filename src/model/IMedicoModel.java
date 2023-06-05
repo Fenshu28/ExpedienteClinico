@@ -7,6 +7,16 @@
 
 package model;
 
+import entity.Medico;
+import java.util.HashMap;
+import javax.swing.table.DefaultTableModel;
+
 public interface IMedicoModel {
+    HashMap<String,Medico> medicos = new HashMap<>();    
     
+    void agregarRegistro(Medico medico);
+    void eliminarRegistro(String id);
+    void actualizarRegistro(Medico medico);
+    void mostrarRegistros(DefaultTableModel modeloTabla);
+    Medico recuperarRegistro(String id);
 }

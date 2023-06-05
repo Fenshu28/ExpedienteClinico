@@ -6,17 +6,19 @@
  **************************************************** */
 package view;
 
-import javax.swing.JOptionPane;
 import entity.Paciente;
 import controller.*;
 
-public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
-    PacienteController controlador = new PacienteController();    
+public class PacienteFrame extends PlantillaRegistroFrame {
+    PacienteController    controlador; 
+    private Paciente paciente;
     
     public PacienteFrame() {
         super();
-        initComponents();
-        setPropios();
+//        initComponents();
+        setPropios();      
+        controlador = new PacienteController();
+        mostrarTabla();
     }
     
     
@@ -43,6 +45,7 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new PacienteFrame().setVisible(true);
             }
@@ -56,7 +59,8 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
     private void setPropios(){
         this.lbTitulo.setText("Paciente");
         this.lbId.setText("NSS");
-        this.tblRegistros.getColumnModel().getColumn(0).setHeaderValue("RFC");
+        this.tblRegistros.getColumnModel().getColumn(0).setHeaderValue(
+                "NSS");
         this.tblRegistros.getTableHeader().repaint();
     }
     
@@ -64,8 +68,8 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
      * Actualiza la tabla
      */
     @Override
-    public void MostrarTabla() {
-        
+    public void mostrarTabla() {
+        controlador.mostrarRegistros(modelo);
     }
     
     /**
@@ -73,8 +77,8 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
      */
     @Override
     public void guardarDatos(){
-        
-        
+        controlador.agregarRegistro(crearPaciente());
+        mostrarTabla();
     }
     
     /**
@@ -82,7 +86,8 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
      */
     @Override
     public void recuperarDatos(){
-        
+        paciente = controlador.recuperarRegistro(idAct);
+        llenarCampos();
     }
     
     /**
@@ -90,7 +95,8 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
      */
     @Override
     public void elimimnarDatos(){
-        
+        controlador.eliminarRegistro(idAct);
+        mostrarTabla();
     }
     
     /**
@@ -98,8 +104,23 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
      */
     @Override
     public void actualizarDatos(){
-        
+        controlador.actualizarRegistro(crearPaciente());
+        mostrarTabla();
     }
+    
+    /**
+     * Llena los campos del formulario a partir de un paciente recuperado del
+     * hasmap.
+     */
+    @Override
+    public void llenarCampos() {
+        txtId.setText(paciente.getNss());
+        txtNombre.setText(paciente.getNombreCompleto());
+        txtDireccion.setText(paciente.getDireccion());
+        txtTelefono.setText(paciente.getNumeroTelefono());
+        txtFecha.setText(paciente.getFechaNacimiento());
+    } 
+    
     
     /**
      * Crea la instancia de un paciente inicializandolo con la información
@@ -108,13 +129,13 @@ public class PacienteFrame extends PlantillaRegistroFrame implements Registros {
      * El paciente ya instanciado para ser insertado o actuializado en el hashmap
      */
     Paciente crearPaciente(){
-        Paciente paciente;
+        Paciente pacienteTemp;
         idAct =txtId.getText();
-        paciente = new Paciente(idAct, txtNombre.getText(),
+        pacienteTemp = new Paciente(idAct, txtNombre.getText(),
                 txtFecha.getText(),
                 cmbGenero.getItemAt(cmbGenero.getSelectedIndex()),
                 txtDireccion.getText(), txtTelefono.getText());
-        return paciente;
+        return pacienteTemp;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

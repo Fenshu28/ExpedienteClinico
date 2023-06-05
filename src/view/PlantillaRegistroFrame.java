@@ -22,7 +22,6 @@ public abstract class PlantillaRegistroFrame extends JFrame{
     public PlantillaRegistroFrame() {
         initComponents();
         modelo = (DefaultTableModel) tblRegistros.getModel();
-        MostrarTabla();
         limpiarFrame();
     }
 
@@ -350,7 +349,7 @@ public abstract class PlantillaRegistroFrame extends JFrame{
         btnCerrar.setBackground(Color.RED);
     }//GEN-LAST:event_btnCerrarMouseEntered
     
-    public abstract void MostrarTabla() ;
+    public abstract void mostrarTabla() ;
     
     public abstract void guardarDatos();
     
@@ -359,6 +358,8 @@ public abstract class PlantillaRegistroFrame extends JFrame{
     public abstract void elimimnarDatos();
     
     public abstract void actualizarDatos();
+    
+    public abstract void llenarCampos();
     
     private void limpiarFrame(){
         Component[] components = pnlMain.getComponents();
@@ -369,6 +370,7 @@ public abstract class PlantillaRegistroFrame extends JFrame{
                 textField.setText("");
             }
         }
+//        MostrarTabla();
     }
     
 //    public static void main(String args[]) {

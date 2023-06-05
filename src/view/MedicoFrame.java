@@ -8,15 +8,17 @@
 package view;
 
 import controller.*;
-import javax.swing.JOptionPane;
 import entity.Medico;
 
 public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
-    MedicoController controlador = new MedicoController();
+    MedicoController controlador;
+    private Medico medico;
     
     public MedicoFrame() {
         initComponents();
         setPropios();
+        controlador = new MedicoController();
+        mostrarTabla();
     }
 
     @SuppressWarnings("unchecked")
@@ -54,96 +56,62 @@ public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
     private void setPropios(){        
         this.lbTitulo.setText("Medicos");
         this.lbId.setText("RFC");
-        this.tblRegistros.getColumnModel().getColumn(0).setHeaderValue("RFC");
+        this.tblRegistros.getColumnModel().getColumn(0).setHeaderValue(
+                "RFC");
         this.tblRegistros.getTableHeader().repaint();
     }
     
-    /**
-     * Actualiza la tabla
-     */
-    public void MostrarTabla() {
-        modelo.setRowCount(0);
-        for (String nssItem : medicos.keySet()) {
-            Object fila[] = new Object[3];
-
-            fila[0] = medicos.get(nssItem).getRFC();
-            fila[1] = medicos.get(nssItem).getNombreCompleto();
-            fila[2] = medicos.get(nssItem).getGenero();
-            modelo.addRow(fila);
-
-        }
+    @Override
+    public void mostrarTabla() {
+        controlador.mostrarRegistros(modelo);
     }
     
     /**
      * Inserta un médico en el hashmap.
      */
+    @Override
     public void guardarDatos(){
-        if(!medicos.containsKey(txtId.getText())){
-            try {
-                Medico medico = crearMedico();
-
-                medicos.put(idAct,medico);
-                MostrarTabla();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }else{
-            JOptionPane.showMessageDialog(this, 
-                    "Este medico ya existe", "Error de inserción", 
-                    JOptionPane.WARNING_MESSAGE);
-        }
-        
+        controlador.agregarRegistro(crearMedico());
+        mostrarTabla();
     }
     
     /**
      * Recupera un médico y rellena los campos en el form
      */
+    @Override
     public void recuperarDatos(){
-        if(medicos.containsKey(idAct)){
-            Medico medico = medicos.get(idAct);
-            txtId.setText(idAct);
-            txtNombre.setText(medico.getNombreCompleto());
-            txtDireccion.setText(medico.getDireccion());
-            txtTelefono.setText(medico.getNumeroTelefono());
-            txtFecha.setText(medico.getFechaNacimiento());
-            
-            MostrarTabla();
-        }else{
-            JOptionPane.showMessageDialog(this, 
-                    "Este medico no existe", "Error de búsqueda", 
-                    JOptionPane.WARNING_MESSAGE);
-        }
+        medico = controlador.recuperarRegistro(idAct);
+        llenarCampos();
     }
     
     /**
      * Elimina un médico del hashmap.
      */
+    @Override
     public void elimimnarDatos(){
-        if(medicos.containsKey(idAct)){
-            Medico medico = medicos.remove(idAct);
-            
-            MostrarTabla();
-        }else{
-            JOptionPane.showMessageDialog(this, 
-                    "Este medico no existe", "Error de búsqueda", 
-                    JOptionPane.WARNING_MESSAGE);
-        }
+        controlador.eliminarRegistro(idAct);
+        mostrarTabla();
     }
     
     /**
      * Actualiza un médico en el hashmap.
      */
+    @Override
     public void actualizarDatos(){
-        if(medicos.containsKey(idAct)){
-            Medico medico = medicos.replace(idAct,crearMedico());
-            
-            MostrarTabla();
-        }else{
-            JOptionPane.showMessageDialog(this, 
-                    "Este medico no existe", "Error de búsqueda", 
-                    JOptionPane.WARNING_MESSAGE);
-        }
+        controlador.actualizarRegistro(crearMedico());
+        mostrarTabla();
     }
+    
+    @Override
+    public void llenarCampos() {
+        txtId.setText(medico.getRFC());
+        txtNombre.setText(medico.getNombreCompleto());
+        txtDireccion.setText(medico.getDireccion());
+        txtTelefono.setText(medico.getNumeroTelefono());
+        txtFecha.setText(medico.getFechaNacimiento());
+    }
+
+
     
     /**
      * Crea la instancia de un médico inicializandolo con la información
@@ -152,13 +120,13 @@ public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
      * El médico ya instanciado para ser insertado o actuializado en el hashmap
      */
     Medico crearMedico(){
-        Medico medico;
+        Medico medicoTemp;
         idAct =txtId.getText();
-        medico = new Medico(idAct, txtNombre.getText(),
+        medicoTemp = new Medico(idAct, txtNombre.getText(),
                 txtFecha.getText(),
                 cmbGenero.getItemAt(cmbGenero.getSelectedIndex()),
                 txtDireccion.getText(), txtTelefono.getText());
-        return medico;
+        return medicoTemp;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

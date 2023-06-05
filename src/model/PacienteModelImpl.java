@@ -18,12 +18,8 @@ public class PacienteModelImpl implements IPacienteModel{
     @Override
     public void agregarRegistro(Paciente paciente) {
         if(!pacientes.containsKey(paciente.getNss())){
-            try {
-//                Paciente paciente = crearPaciente();
-//                idAct = txtId.getText();
-                
+            try {               
                 pacientes.put(paciente.getNss(),paciente);
-//                MostrarTabla();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -49,8 +45,6 @@ public class PacienteModelImpl implements IPacienteModel{
     public void actualizarRegistro(Paciente paciente) {
         if(pacientes.containsKey(paciente.getNss())){
             pacientes.replace(paciente.getNss(),paciente);
-            
-//            MostrarTabla();
         }else{
             JOptionPane.showMessageDialog(null, 
                     "Este paciente no existe", "Error de búsqueda", 
@@ -60,29 +54,24 @@ public class PacienteModelImpl implements IPacienteModel{
 
     @Override
     public void mostrarRegistros(DefaultTableModel modeloTabla) {
-        modeloTabla.setRowCount(0);
-        for (String nssItem : pacientes.keySet()) {
-            Object fila[] = new Object[3];
+        if(!pacientes.isEmpty()){
+            modeloTabla.setRowCount(0);
+            for (String nssItem : pacientes.keySet()) {
+                Object fila[] = new Object[3];
 
-            fila[0] = pacientes.get(nssItem).getNss();
-            fila[1] = pacientes.get(nssItem).getNombreCompleto();
-            fila[2] = pacientes.get(nssItem).getGenero();
-            modeloTabla.addRow(fila);
+                fila[0] = pacientes.get(nssItem).getNss();
+                fila[1] = pacientes.get(nssItem).getNombreCompleto();
+                fila[2] = pacientes.get(nssItem).getGenero();
+                modeloTabla.addRow(fila);
 
-        }
+            }
+        }        
     }
 
     @Override
     public Paciente recuperarRegistro(String id) {
         if(pacientes.containsKey(id)){
             return pacientes.get(id);
-//            txtId.setText(idAct);
-//            txtNombre.setText(paciente.getNombreCompleto());
-//            txtDireccion.setText(paciente.getDireccion());
-//            txtTelefono.setText(paciente.getNumeroTelefono());
-//            txtFecha.setText(paciente.getFechaNacimiento());
-            
-//            MostrarTabla();
         }else{
             JOptionPane.showMessageDialog(null, 
                     "Este paciente no existe", "Error de búsqueda", 
