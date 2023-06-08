@@ -9,11 +9,13 @@
 package model;
 
 import entity.Medico;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class MedicoModelImpl implements IMedicoModel{
-
+    HashMap<String,Medico> medicos = new HashMap<>();
+    
     @Override
     public void agregarRegistro(Medico medico) {
         if(!medicos.containsKey(medico.getRFC())){

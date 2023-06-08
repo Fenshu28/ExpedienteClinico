@@ -9,12 +9,14 @@
 package model;
 
 import entity.Paciente;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
 public class PacienteModelImpl implements IPacienteModel{
-
+    HashMap<String,Paciente> pacientes = new HashMap<>();
+    
     @Override
     public void agregarRegistro(Paciente paciente) {
         if(!pacientes.containsKey(paciente.getNss())){
