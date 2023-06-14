@@ -7,7 +7,6 @@
 
 package entity;
 
-
 public class Persona {
     String nombreCompleto;
     String fechaNacimiento;

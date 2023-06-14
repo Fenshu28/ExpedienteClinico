@@ -2,12 +2,13 @@
  * Autor: Cristopher Alexis Zarate Valencia          *
  * Fecha de creación: 8 jun 2023                        *
  * Fecha de actualización: 8 jun 2023                   *
- * Descripción: Clase para 
+ * Descripción: Clase para el usuario.
  *****************************************************/
 
 package entity;
 
 public class Usuario {
+    private int id;
     private String nombre;
     private String Usuario;
     private String Contraseña;
@@ -18,11 +19,26 @@ public class Usuario {
         this.nombre = nombre;
     }
     
+    public Usuario(int id, String Usuario, String Contraseña,String nombre) {
+        this.id = id;
+        this.Usuario = Usuario;
+        this.Contraseña = Contraseña;
+        this.nombre = nombre;
+    }
+    
     public Usuario(String Usuario, String Contraseña) {
         this.Usuario = Usuario;
         this.Contraseña = Contraseña;
     }
-    
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+        
     public String getUsuario() {
         return Usuario;
     }

@@ -7,7 +7,6 @@
 
 package model;
 
-
 public interface ILoginModel {
-
+    public boolean iniciarSesion(String usuario, String contraseña);
 }

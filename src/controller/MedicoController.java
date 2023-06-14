@@ -9,26 +9,25 @@ package controller;
 
 import entity.Medico;
 import javax.swing.table.DefaultTableModel;
-import service.IMedicoService;
-import service.MedicoServiceImpl;
-
+import model.IMedicoModel;
+import model.MedicoModelImpl;
 
 public class MedicoController {
-    IMedicoService servicio = new MedicoServiceImpl();
+    IMedicoModel modelo = new MedicoModelImpl();
     
     public void agregarRegistro(Medico medico){
-        servicio.agregarRegistro(medico);
+        modelo.agregarRegistro(medico);
     }
     public void eliminarRegistro(String id){
-        servicio.eliminarRegistro(id);
+        modelo.eliminarRegistro(id);
     }
     public void actualizarRegistro(Medico medico){
-        servicio.actualizarRegistro(medico);
+        modelo.actualizarRegistro(medico);
     }
     public void mostrarRegistros(DefaultTableModel modeloTabla){
-        servicio.mostrarRegistros(modeloTabla);
+        modelo.mostrarRegistros(modeloTabla);
     }
     public Medico recuperarRegistro(String id){
-        return servicio.recuperarRegistro(id);
+        return modelo.recuperarRegistro(id);
     }
 }

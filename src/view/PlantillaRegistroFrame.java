@@ -6,8 +6,8 @@
  **************************************************** */
 package view;
 
-import java.awt.Color;
 import java.awt.Component;
+import java.awt.Window;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -31,7 +31,6 @@ public abstract class PlantillaRegistroFrame extends JFrame{
     private void initComponents() {
 
         topBar = new javax.swing.JPanel();
-        btnCerrar = new javax.swing.JLabel();
         lbTitulo = new javax.swing.JLabel();
         pnlMain = new javax.swing.JPanel();
         lbId = new javax.swing.JLabel();
@@ -52,9 +51,16 @@ public abstract class PlantillaRegistroFrame extends JFrame{
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRegistros = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAlwaysOnTop(true);
         setMinimumSize(new java.awt.Dimension(460, 533));
-        setUndecorated(true);
+        setModalExclusionType(null);
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         topBar.setBackground(new java.awt.Color(59, 194, 222));
@@ -69,18 +75,6 @@ public abstract class PlantillaRegistroFrame extends JFrame{
             }
         });
 
-        btnCerrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cerrar.png"))); // NOI18N
-        btnCerrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCerrarMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnCerrarMouseEntered(evt);
-            }
-        });
-
         lbTitulo.setFont(new java.awt.Font("Liberation Sans", 0, 24)); // NOI18N
         lbTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lbTitulo.setText("Titulo");
@@ -92,13 +86,10 @@ public abstract class PlantillaRegistroFrame extends JFrame{
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topBarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
-                .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(254, Short.MAX_VALUE))
         );
         topBarLayout.setVerticalGroup(
             topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(topBarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbTitulo)
@@ -312,10 +303,6 @@ public abstract class PlantillaRegistroFrame extends JFrame{
         this.setLocation(evt.getXOnScreen() - posX, evt.getYOnScreen() - posY);
     }//GEN-LAST:event_topBarMouseDragged
 
-    private void btnCerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseClicked
-        this.dispose();
-    }//GEN-LAST:event_btnCerrarMouseClicked
-
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         guardarDatos();
         limpiarFrame();
@@ -345,9 +332,12 @@ public abstract class PlantillaRegistroFrame extends JFrame{
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void btnCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseEntered
-        btnCerrar.setBackground(Color.RED);
-    }//GEN-LAST:event_btnCerrarMouseEntered
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+//        System.out.println(this.getParent().getName());
+        for (Window window : PrincipalFrame.getWindows()) {
+            System.out.println(window.getName());
+        }
+    }//GEN-LAST:event_formWindowClosed
     
     public abstract void mostrarTabla() ;
     
@@ -385,7 +375,6 @@ public abstract class PlantillaRegistroFrame extends JFrame{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JButton btnActualizar;
-    private javax.swing.JLabel btnCerrar;
     protected javax.swing.JButton btnEliminar;
     protected javax.swing.JButton btnGuardar;
     protected javax.swing.JComboBox<String> cmbGenero;

@@ -10,24 +10,25 @@ package controller;
 
 import entity.Paciente;
 import javax.swing.table.DefaultTableModel;
-import service.*;
+import model.IPacienteModel;
+import model.PacienteModelImpl;
 
 public class PacienteController {
-    IPacienteService servicio = new PacienteServiceImpl();
+    IPacienteModel modelo = new PacienteModelImpl();
     
     public void agregarRegistro(Paciente paciente){
-        servicio.agregarRegistro(paciente);
+        modelo.agregarRegistro(paciente);
     }
     public void eliminarRegistro(String id){
-        servicio.eliminarRegistro(id);
+        modelo.eliminarRegistro(id);
     }
     public void actualizarRegistro(Paciente paciente){
-        servicio.actualizarRegistro(paciente);
+        modelo.actualizarRegistro(paciente);
     }
     public void mostrarRegistros(DefaultTableModel modeloTabla){
-        servicio.mostrarRegistros(modeloTabla);
+        modelo.mostrarRegistros(modeloTabla);
     }
     public Paciente recuperarRegistro(String id){
-        return servicio.recuperarRegistro(id);
+        return modelo.recuperarRegistro(id);
     }
 }

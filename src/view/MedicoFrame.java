@@ -7,10 +7,12 @@
 
 package view;
 
+import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
+import com.formdev.flatlaf.intellijthemes.FlatGrayIJTheme;
 import controller.*;
 import entity.Medico;
 
-public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
+public class MedicoFrame extends PlantillaRegistroFrame {
     MedicoController controlador;
     private Medico medico;
     
@@ -25,7 +27,9 @@ public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setModalExclusionType(java.awt.Dialog.ModalExclusionType.TOOLKIT_EXCLUDE);
+        setName("MedicoFrame"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -42,6 +46,14 @@ public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
     }// </editor-fold>//GEN-END:initComponents
 
     public static void main(String args[]) {
+        try {
+//            UIManager.setLookAndFeel(new FlatMacLightLaf());
+            FlatGrayIJTheme.setup();
+            MedicoFrame.setDefaultLookAndFeelDecorated( true );
+            FlatAnimatedLafChange.showSnapshot();
+        } catch (Exception ex) {
+            System.err.println("Fallo al inicializar el tema.");
+        }
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MedicoFrame().setVisible(true);
@@ -61,6 +73,9 @@ public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
         this.tblRegistros.getTableHeader().repaint();
     }
     
+    /**
+     * Pobla la tabla con los datos guardados en la lista.
+     */
     @Override
     public void mostrarTabla() {
         controlador.mostrarRegistros(modelo);
@@ -94,7 +109,8 @@ public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
     }
     
     /**
-     * Actualiza un médico en el hashmap.
+     * Actualiza un médico en el hashmap. Crea un médico desde los campos en el
+     * formulario. Utiliza el método crearMedico().
      */
     @Override
     public void actualizarDatos(){
@@ -102,6 +118,10 @@ public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
         mostrarTabla();
     }
     
+    /**
+     * Pobla de datos los campos del formulario con información obtenida del
+     * médico recien extraido.
+     */
     @Override
     public void llenarCampos() {
         txtId.setText(medico.getRFC());
@@ -117,7 +137,7 @@ public class MedicoFrame extends PlantillaRegistroFrame implements Registros {
      * Crea la instancia de un médico inicializandolo con la información
      * de los campos
      * @return 
-     * El médico ya instanciado para ser insertado o actuializado en el hashmap
+     * Retorna el médico ya instanciado para ser insertado o actuializado en el hashmap
      */
     Medico crearMedico(){
         Medico medicoTemp;
