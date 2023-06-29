@@ -8,6 +8,7 @@
 package controller;
 
 import entity.Medico;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import model.IMedicoModel;
 import model.MedicoModelImpl;
@@ -24,10 +25,10 @@ public class MedicoController {
     public void actualizarRegistro(Medico medico){
         modelo.actualizarRegistro(medico);
     }
-    public void mostrarRegistros(DefaultTableModel modeloTabla){
-        modelo.mostrarRegistros(modeloTabla);
+    public void mostrarRegistros(List<Medico> listaMedicos){
+        modelo.mostrarRegistros(listaMedicos);
     }
-    public Medico recuperarRegistro(String id){
-        return modelo.recuperarRegistro(id);
+    public Medico recuperarRegistro(List<Medico> listaMedicos,String id){
+        return modelo.recuperarRegistro(listaMedicos,id);
     }
 }

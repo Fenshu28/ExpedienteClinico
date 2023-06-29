@@ -7,17 +7,19 @@
 
 package view;
 
-import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
-import com.formdev.flatlaf.intellijthemes.FlatGrayIJTheme;
-import controller.*;
+import controller.MedicoController;
 import entity.Medico;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MedicoFrame extends PlantillaRegistroFrame {
     MedicoController controlador;
     private Medico medico;
-    
-    public MedicoFrame() {
-        initComponents();
+    private List<Medico> listaMedicos;
+
+    public MedicoFrame(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
+//        initComponents();
         setPropios();
         controlador = new MedicoController();
         mostrarTabla();
@@ -28,8 +30,7 @@ public class MedicoFrame extends PlantillaRegistroFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setModalExclusionType(java.awt.Dialog.ModalExclusionType.TOOLKIT_EXCLUDE);
-        setName("MedicoFrame"); // NOI18N
+        setTitle("MEdicos");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -44,33 +45,19 @@ public class MedicoFrame extends PlantillaRegistroFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    public static void main(String args[]) {
-        try {
-//            UIManager.setLookAndFeel(new FlatMacLightLaf());
-            FlatGrayIJTheme.setup();
-            MedicoFrame.setDefaultLookAndFeelDecorated( true );
-            FlatAnimatedLafChange.showSnapshot();
-        } catch (Exception ex) {
-            System.err.println("Fallo al inicializar el tema.");
-        }
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MedicoFrame().setVisible(true);
-            }
-        });
-    }
     
     /**
      * Define propedades que los formularios tienen propiamente y los sustituye
      * por los predefinidos.
      */
-    private void setPropios(){        
+    private void setPropios() {
         this.lbTitulo.setText("Medicos");
         this.lbId.setText("RFC");
         this.tblRegistros.getColumnModel().getColumn(0).setHeaderValue(
                 "RFC");
         this.tblRegistros.getTableHeader().repaint();
+        this.cmbEspecialidad.setVisible(true);
+        this.lbEspecialidad.setVisible(true);
     }
     
     /**
@@ -78,46 +65,58 @@ public class MedicoFrame extends PlantillaRegistroFrame {
      */
     @Override
     public void mostrarTabla() {
-        controlador.mostrarRegistros(modelo);
+        listaMedicos = new ArrayList<>();
+        controlador.mostrarRegistros(listaMedicos);
+        if (!listaMedicos.isEmpty()) {
+            modelo.setRowCount(0);
+            for (Medico medicoL : listaMedicos) {
+                Object fila[] = new Object[3];
+
+                fila[0] = medicoL.getRFC();
+                fila[1] = medicoL.getNombreCompleto();
+                fila[2] = medicoL.getGenero();
+                modelo.addRow(fila);
+            }
+        }
     }
-    
+
     /**
      * Inserta un médico en el hashmap.
      */
     @Override
-    public void guardarDatos(){
+    public void guardarDatos() {
         controlador.agregarRegistro(crearMedico());
         mostrarTabla();
     }
-    
+
     /**
      * Recupera un médico y rellena los campos en el form
      */
     @Override
-    public void recuperarDatos(){
-        medico = controlador.recuperarRegistro(idAct);
+    public void recuperarDatos() {
+        medico = controlador.recuperarRegistro(listaMedicos, idAct);
         llenarCampos();
     }
-    
+
     /**
      * Elimina un médico del hashmap.
      */
     @Override
-    public void elimimnarDatos(){
+    public void elimimnarDatos() {
         controlador.eliminarRegistro(idAct);
         mostrarTabla();
     }
-    
+
     /**
      * Actualiza un médico en el hashmap. Crea un médico desde los campos en el
      * formulario. Utiliza el método crearMedico().
      */
     @Override
-    public void actualizarDatos(){
+    public void actualizarDatos() {
         controlador.actualizarRegistro(crearMedico());
         mostrarTabla();
     }
-    
+
     /**
      * Pobla de datos los campos del formulario con información obtenida del
      * médico recien extraido.
@@ -126,29 +125,32 @@ public class MedicoFrame extends PlantillaRegistroFrame {
     public void llenarCampos() {
         txtId.setText(medico.getRFC());
         txtNombre.setText(medico.getNombreCompleto());
+        cmbEspecialidad.setSelectedItem(medico.getEspecialidad());
         txtDireccion.setText(medico.getDireccion());
+        cmbGenero.setSelectedItem(medico.getGenero());
         txtTelefono.setText(medico.getNumeroTelefono());
-        txtFecha.setText(medico.getFechaNacimiento());
+        txtFecha.setDate(medico.getFechaNacimiento());
     }
 
-
-    
     /**
-     * Crea la instancia de un médico inicializandolo con la información
-     * de los campos
-     * @return 
-     * Retorna el médico ya instanciado para ser insertado o actuializado en el hashmap
+     * Crea la instancia de un médico inicializandolo con la información de los
+     * campos
+     *
+     * @return Retorna el médico ya instanciado para ser insertado o
+     * actuializado en el hashmap
      */
-    Medico crearMedico(){
+    Medico crearMedico() {
         Medico medicoTemp;
-        idAct =txtId.getText();
+        idAct = txtId.getText();
         medicoTemp = new Medico(idAct, txtNombre.getText(),
-                txtFecha.getText(),
+                txtFecha.getDate(),
                 cmbGenero.getItemAt(cmbGenero.getSelectedIndex()),
-                txtDireccion.getText(), txtTelefono.getText());
+                txtDireccion.getText(), txtTelefono.getText(),
+                cmbEspecialidad.getItemAt(
+                        cmbEspecialidad.getSelectedIndex()));
         return medicoTemp;
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

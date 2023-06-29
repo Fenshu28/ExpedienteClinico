@@ -10,19 +10,22 @@ package view;
 
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.intellijthemes.FlatGrayIJTheme;
-import conexion.Conexion;
 import controller.LoginController;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
+import entity.DatosConfig;
+import java.awt.event.KeyEvent;
 
 public class LoginFrame extends javax.swing.JFrame {
-    Conexion con = new Conexion();
-    LoginController controlador = new LoginController();
+    private LoginController controlador = new LoginController();
+    private DatosConfig config;
     
     public LoginFrame() {
         initComponents();
-        txtContraseña.putClientProperty("JPasswordField.showRevealButton", true);
-        txtContraseña.putClientProperty("JPasswordField.showCapsLock", true);
+        config = new DatosConfig();
+        
+        txtContraseña.putClientProperty("JPasswordField.showRevealButton", 
+                true);
+        txtContraseña.putClientProperty("JPasswordField.showCapsLock",
+                true);
     }
 
     @SuppressWarnings("unchecked")
@@ -61,14 +64,26 @@ public class LoginFrame extends javax.swing.JFrame {
 
         txtUsuario.setBackground(new java.awt.Color(242, 242, 242));
         txtUsuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtUsuario.setText("AdminH");
         txtUsuario.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 102, 153)));
+        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyPressed(evt);
+            }
+        });
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Contraseña");
 
         txtContraseña.setBackground(new java.awt.Color(242, 242, 242));
         txtContraseña.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtContraseña.setText("Ari1505*");
         txtContraseña.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 102, 153)));
+        txtContraseña.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtContraseñaKeyPressed(evt);
+            }
+        });
 
         btnAcceder.setText("Acceder");
         btnAcceder.addActionListener(new java.awt.event.ActionListener() {
@@ -127,24 +142,40 @@ public class LoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAccederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccederActionPerformed
+        acceder();
+    }//GEN-LAST:event_btnAccederActionPerformed
+
+    private void txtUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+            acceder();
+    }//GEN-LAST:event_txtUsuarioKeyPressed
+
+    private void txtContraseñaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseñaKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+            acceder();
+    }//GEN-LAST:event_txtContraseñaKeyPressed
+
+    private void acceder(){
         if(controlador.iniciarSesion(txtUsuario.getText(),
-                String.copyValueOf(txtContraseña.getPassword()))){            
+                String.copyValueOf(txtContraseña.getPassword()))){  
+            
+            config = new DatosConfig(txtUsuario.getText(),
+                    String.copyValueOf( txtContraseña.getPassword()));
             this.setVisible(false);
             PrincipalFrame formulario = new PrincipalFrame();
             formulario.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(this,
-                    "Usuario o contraseña incorrecta.", "Error", 
-                    JOptionPane.ERROR);
         }
-    }//GEN-LAST:event_btnAccederActionPerformed
-
+    }
+    
     public static void main(String args[]) {
         try {
-//            UIManager.setLookAndFeel(new FlatMacLightLaf());
             FlatGrayIJTheme.setup();
             LoginFrame.setDefaultLookAndFeelDecorated( 
                     true );
+            MedicoFrame.setDefaultLookAndFeelDecorated( 
+                    true );
+            PacienteFrame.setDefaultLookAndFeelDecorated(
+                true);
             FlatAnimatedLafChange.showSnapshot();
         } catch (Exception ex) {
             System.err.println("Fallo al inicializar el tema.");

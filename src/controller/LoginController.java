@@ -7,6 +7,8 @@
 
 package controller;
 
+import entity.DatosConfig;
+import javax.swing.JOptionPane;
 import model.ILoginModel;
 import model.LoginModelImpl;
 
@@ -15,6 +17,14 @@ public class LoginController {
     ILoginModel modelo= new LoginModelImpl();
     
     public boolean iniciarSesion(String usuario, String contraseña) {
-        return modelo.iniciarSesion(usuario, contraseña);
+       
+        if(DatosConfig.getIntentos()>0){
+            return modelo.iniciarSesion(usuario, contraseña);
+        }else{
+            JOptionPane.showMessageDialog(null,
+                        "Se excedió el número de intentos. {@hola}", 
+                        "Error",JOptionPane.ERROR_MESSAGE);
+            return false;
+        }        
     }
 }

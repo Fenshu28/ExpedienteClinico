@@ -10,19 +10,21 @@ package model;
 import entity.Usuario;
 import javax.swing.table.DefaultTableModel;
 import conexion.Conexion;
+import entity.DatosConfig;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
-import org.mindrot.jbcrypt.BCrypt;
 
 public class UsuarioModelImpl implements IUsuarioModel {
-    Conexion con = new Conexion();
+    Conexion con;
     
     @Override
     public void agregarRegistro(Usuario usuario) {
+        con = new Conexion(DatosConfig.getUsuario(),
+            DatosConfig.getContraseña());
         Connection conQuery = con.getConnection();
         String consulta = "INSERT INTO Usuarios VALUES (DEFAULT,?,?,?,?)";
 
@@ -30,8 +32,8 @@ public class UsuarioModelImpl implements IUsuarioModel {
             PreparedStatement pstmt = conQuery.prepareStatement(consulta);
             // Leer el archivo binario y asignarlo al parámetro de la consulta
             pstmt.setString(1, usuario.getUsuario());
-            pstmt.setString(2, BCrypt.hashpw(
-                    usuario.getContraseña(),BCrypt.gensalt()));
+//            pstmt.setString(2, BCrypt.hashpw(
+//                    usuario.getContraseña(),BCrypt.gensalt()));
             pstmt.setString(3, usuario.getNombre());
             pstmt.setNull(4, java.sql.Types.VARCHAR);
             
@@ -43,6 +45,8 @@ public class UsuarioModelImpl implements IUsuarioModel {
                     "Error de inserción",
                     JOptionPane.ERROR_MESSAGE);
         }
+        
+        con.disponse();
     }
 
     @Override
@@ -73,8 +77,8 @@ public class UsuarioModelImpl implements IUsuarioModel {
             PreparedStatement pstmt = conQuery.prepareStatement(consulta);
             // Leer el archivo binario y asignarlo al parámetro de la consulta
             pstmt.setString(1, usuario.getUsuario());
-            pstmt.setString(2, BCrypt.hashpw(
-                    usuario.getContraseña(),BCrypt.gensalt()));
+//            pstmt.setString(2, BCrypt.hashpw(
+//                    usuario.getContraseña(),BCrypt.gensalt()));
             pstmt.setString(3, usuario.getNombre());
             pstmt.setInt(4, usuario.getId());
             

@@ -8,26 +8,28 @@ package view;
 
 import entity.Paciente;
 import controller.*;
+import java.awt.Frame;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PacienteFrame extends PlantillaRegistroFrame {
-    PacienteController    controlador; 
+    private final PacienteController controlador; 
     private Paciente paciente;
-    
-    public PacienteFrame() {
-        super();
-//        initComponents();
+    private List<Paciente> listaPacientes;
+
+    public PacienteFrame(Frame owner, boolean modal) {
+        super(owner, modal);
         setPropios();      
         controlador = new PacienteController();
         mostrarTabla();
     }
-    
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Pacientes");
         setName("PacienteFrame"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -43,15 +45,6 @@ public class PacienteFrame extends PlantillaRegistroFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new PacienteFrame().setVisible(true);
-            }
-        });
-    }
     
     /**
      * Define propedades que los formularios tienen propiamente y los sustituye
@@ -70,7 +63,19 @@ public class PacienteFrame extends PlantillaRegistroFrame {
      */
     @Override
     public void mostrarTabla() {
-        controlador.mostrarRegistros(modelo);
+        listaPacientes = new ArrayList<>();
+        controlador.mostrarRegistros(listaPacientes);
+        if(!listaPacientes.isEmpty()){
+            modelo.setRowCount(0);
+            for (Paciente pacienteL : listaPacientes) {
+                Object fila[] = new Object[3];
+
+                fila[0] = pacienteL.getNss();
+                fila[1] = pacienteL.getNombreCompleto();
+                fila[2] = pacienteL.getGenero();
+                modelo.addRow(fila);
+            }
+        }
     }
     
     /**
@@ -87,7 +92,7 @@ public class PacienteFrame extends PlantillaRegistroFrame {
      */
     @Override
     public void recuperarDatos(){
-        paciente = controlador.recuperarRegistro(idAct);
+        paciente = controlador.recuperarRegistro(listaPacientes,idAct);
         llenarCampos();
     }
     
@@ -118,8 +123,9 @@ public class PacienteFrame extends PlantillaRegistroFrame {
         txtId.setText(paciente.getNss());
         txtNombre.setText(paciente.getNombreCompleto());
         txtDireccion.setText(paciente.getDireccion());
+        cmbGenero.setSelectedItem(paciente.getGenero());
         txtTelefono.setText(paciente.getNumeroTelefono());
-        txtFecha.setText(paciente.getFechaNacimiento());
+        txtFecha.setDate(paciente.getFechaNacimiento());
     } 
     
     
@@ -127,13 +133,13 @@ public class PacienteFrame extends PlantillaRegistroFrame {
      * Crea la instancia de un paciente inicializandolo con la información
      * de los campos
      * @return 
-     * El paciente ya instanciado para ser insertado o actuializado en el hashmap
+     * El paciente ya instanciado para ser insertado o actuializado en la base.
      */
     Paciente crearPaciente(){
         Paciente pacienteTemp;
         idAct =txtId.getText();
         pacienteTemp = new Paciente(idAct, txtNombre.getText(),
-                txtFecha.getText(),
+                txtFecha.getDate(),
                 cmbGenero.getItemAt(cmbGenero.getSelectedIndex()),
                 txtDireccion.getText(), txtTelefono.getText());
         return pacienteTemp;

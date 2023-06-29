@@ -6,10 +6,12 @@
  *****************************************************/
 package entity;
 
+import java.util.Date;
+
 public class Paciente extends Persona {
     private String nss;    
     
-    public Paciente(String nss, String nombreCompleto, String fechaNacimiento, 
+    public Paciente(String nss, String nombreCompleto, Date fechaNacimiento, 
             String genero, String direccion, String numeroTelefono) {
         super(nombreCompleto, fechaNacimiento, genero, direccion, numeroTelefono);
         this.nss = nss;

@@ -9,7 +9,7 @@
 package controller;
 
 import entity.Paciente;
-import javax.swing.table.DefaultTableModel;
+import java.util.List;
 import model.IPacienteModel;
 import model.PacienteModelImpl;
 
@@ -25,10 +25,10 @@ public class PacienteController {
     public void actualizarRegistro(Paciente paciente){
         modelo.actualizarRegistro(paciente);
     }
-    public void mostrarRegistros(DefaultTableModel modeloTabla){
-        modelo.mostrarRegistros(modeloTabla);
+    public void mostrarRegistros(List<Paciente> listaPaciente){
+        modelo.mostrarRegistros(listaPaciente);
     }
-    public Paciente recuperarRegistro(String id){
-        return modelo.recuperarRegistro(id);
+    public Paciente recuperarRegistro(List<Paciente> listaPaciente,String id){
+        return modelo.recuperarRegistro(listaPaciente,id);
     }
 }

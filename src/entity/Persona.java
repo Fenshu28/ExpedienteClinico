@@ -7,9 +7,11 @@
 
 package entity;
 
+import java.util.Date;
+
 public class Persona {
     String nombreCompleto;
-    String fechaNacimiento;
+    Date fechaNacimiento;
     String genero;
     String direccion;
     String numeroTelefono;
@@ -18,7 +20,7 @@ public class Persona {
         
     }
     
-    public Persona(String nombreCompleto, String fechaNacimiento, String genero, 
+    public Persona(String nombreCompleto, Date fechaNacimiento, String genero, 
             String direccion, String numeroTelefono) {
         this.nombreCompleto = nombreCompleto;
         this.fechaNacimiento = fechaNacimiento;
@@ -35,11 +37,11 @@ public class Persona {
         this.nombreCompleto = nombreCompleto;
     }
 
-    public String getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 

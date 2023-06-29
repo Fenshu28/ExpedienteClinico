@@ -8,12 +8,12 @@
 package model;
 
 import entity.Medico;
-import javax.swing.table.DefaultTableModel;
+import java.util.List;
 
 public interface IMedicoModel {   
     void agregarRegistro(Medico medico);
     void eliminarRegistro(String id);
     void actualizarRegistro(Medico medico);
-    void mostrarRegistros(DefaultTableModel modeloTabla);
-    Medico recuperarRegistro(String id);
+    void mostrarRegistros(List<Medico> listaMedicos);
+    Medico recuperarRegistro(List<Medico> listaMedicos,String id);
 }

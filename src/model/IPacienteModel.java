@@ -7,12 +7,12 @@
 package model;
 
 import entity.Paciente;
-import javax.swing.table.DefaultTableModel;
+import java.util.List;
 
 public interface IPacienteModel {    
-    void agregarRegistro(Paciente paciente);
-    void eliminarRegistro(String id);
-    void actualizarRegistro(Paciente paciente);
-    void mostrarRegistros(DefaultTableModel modeloTabla);
-    Paciente recuperarRegistro(String id);
+    public void agregarRegistro(Paciente paciente);
+    public void eliminarRegistro(String id);
+    public void actualizarRegistro(Paciente paciente);
+    public void mostrarRegistros(List<Paciente> listaPacientes);
+    public Paciente recuperarRegistro(List<Paciente> listaPacientes,String id);
 }

@@ -11,11 +11,12 @@ import java.util.Date;
 
 public class Expediente {
     private int idExpediente;
-    private Paciente paciente; 
-    private Date fechaCreacion; 
+    private Paciente paciente;
+    private Date fechaCreacion;
     private Date fechaActualizacion;
 
-    public Expediente(int idExpediente, Paciente paciente, Date fechaCreacion, Date fechaActualizacion) {
+    public Expediente(int idExpediente, Paciente paciente, Date fechaCreacion, 
+            Date fechaActualizacion) {
         this.idExpediente = idExpediente;
         this.paciente = paciente;
         this.fechaCreacion = fechaCreacion;

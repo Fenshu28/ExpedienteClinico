@@ -1,5 +1,5 @@
 /** ***************************************************
- * Autor: Cristopher Alexis Zarate Valencia          *
+ * Autor: Cristopher Alexis Zarate Valencia           *
  * Fecha de creación: 23 may 2023                     *
  * Fecha de actualización: 23 may 2023                *
  * Descripción: Clase para la consulta médica.
@@ -9,29 +9,32 @@ package entity;
 
 import java.util.Date;
 
-public class ConsultaMedica {
+public class ConsultaMedica extends Interaccion {
     private int idConsulta;
-    private Expediente expediente;
     private Medico medico;
-    private Date FechaConsulta;
     private String sintomas;
-    private String diagnostico; 
-    private String tratamiento; 
+    private Diagnostico diagnostico; 
     private String NotasAdicionales;
 
     public ConsultaMedica() {
     }
 
-    public ConsultaMedica(int idConsulta, Expediente expediente, Medico medico, Date FechaConsulta, String sintomas, String diagnostico, String tratamiento, String NotasAdicionales) {
+    public ConsultaMedica(int idConsulta) {
         this.idConsulta = idConsulta;
-        this.expediente = expediente;
+    }
+
+    public ConsultaMedica(int idConsulta, Medico medico,String sintomas, 
+            Diagnostico diagnostico, String NotasAdicionales,
+            Expediente expediente, Date fecha) {
+        super(expediente, fecha);
+        this.idConsulta = idConsulta;
         this.medico = medico;
-        this.FechaConsulta = FechaConsulta;
         this.sintomas = sintomas;
         this.diagnostico = diagnostico;
-        this.tratamiento = tratamiento;
         this.NotasAdicionales = NotasAdicionales;
     }
+
+    
 
     public int getIdConsulta() {
         return idConsulta;
@@ -39,14 +42,6 @@ public class ConsultaMedica {
 
     public void setIdConsulta(int idConsulta) {
         this.idConsulta = idConsulta;
-    }
-
-    public Expediente getExpediente() {
-        return expediente;
-    }
-
-    public void setExpediente(Expediente expediente) {
-        this.expediente = expediente;
     }
 
     public Medico getMedico() {
@@ -57,14 +52,6 @@ public class ConsultaMedica {
         this.medico = medico;
     }
 
-    public Date getFechaConsulta() {
-        return FechaConsulta;
-    }
-
-    public void setFechaConsulta(Date FechaConsulta) {
-        this.FechaConsulta = FechaConsulta;
-    }
-
     public String getSintomas() {
         return sintomas;
     }
@@ -73,20 +60,12 @@ public class ConsultaMedica {
         this.sintomas = sintomas;
     }
 
-    public String getDiagnostico() {
+    public Diagnostico getDiagnostico() {
         return diagnostico;
     }
 
-    public void setDiagnostico(String diagnostico) {
+    public void setDiagnostico(Diagnostico diagnostico) {
         this.diagnostico = diagnostico;
-    }
-
-    public String getTratamiento() {
-        return tratamiento;
-    }
-
-    public void setTratamiento(String tratamiento) {
-        this.tratamiento = tratamiento;
     }
 
     public String getNotasAdicionales() {
@@ -96,5 +75,4 @@ public class ConsultaMedica {
     public void setNotasAdicionales(String NotasAdicionales) {
         this.NotasAdicionales = NotasAdicionales;
     }
-    
 }

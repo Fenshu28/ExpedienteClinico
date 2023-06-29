@@ -9,21 +9,19 @@ package entity;
 
 import java.util.Date;
 
-public class ResultadoExamen {
+public class ResultadoExamen extends Interaccion {
     private int idResultado;
-    private Expediente expediente; 
     private String TipoExamen;
-    private Date FechaExamen;
     private String Resultados;
 
     public ResultadoExamen() {
+        super();
     }
 
-    public ResultadoExamen(int idResultado, Expediente expediente, String TipoExamen, Date FechaExamen, String Resultados) {
+    public ResultadoExamen(int idResultado, String TipoExamen, String Resultados, Expediente expediente, Date fecha) {
+        super(expediente, fecha);
         this.idResultado = idResultado;
-        this.expediente = expediente;
         this.TipoExamen = TipoExamen;
-        this.FechaExamen = FechaExamen;
         this.Resultados = Resultados;
     }
 
@@ -35,28 +33,12 @@ public class ResultadoExamen {
         this.idResultado = idResultado;
     }
 
-    public Expediente getExpediente() {
-        return expediente;
-    }
-
-    public void setExpediente(Expediente expediente) {
-        this.expediente = expediente;
-    }
-
     public String getTipoExamen() {
         return TipoExamen;
     }
 
     public void setTipoExamen(String TipoExamen) {
         this.TipoExamen = TipoExamen;
-    }
-
-    public Date getFechaExamen() {
-        return FechaExamen;
-    }
-
-    public void setFechaExamen(Date FechaExamen) {
-        this.FechaExamen = FechaExamen;
     }
 
     public String getResultados() {

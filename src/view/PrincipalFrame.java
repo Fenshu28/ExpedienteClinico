@@ -7,16 +7,15 @@
 
 package view;
 
-import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
-import com.formdev.flatlaf.intellijthemes.FlatGrayIJTheme;
-
 public class PrincipalFrame extends javax.swing.JFrame {
-    MedicoFrame ventanaMedico= new MedicoFrame();
-    PacienteFrame ventanaPaciente= new PacienteFrame();
-    ConsultaMedicaPanel pnlCosultaMedica= new ConsultaMedicaPanel();
+    MedicoFrame ventanaMedico= new MedicoFrame(this,true);
+    PacienteFrame ventanaPaciente= new PacienteFrame(this,true);
+    ConsultaMedicaPanel pnlCosultaMedica= new ConsultaMedicaPanel(PrincipalFrame.this);
+    HistorialPanel pnlHistorialPanel = new HistorialPanel();
     
     public PrincipalFrame() {
         initComponents();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -70,6 +69,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         btnExpediente.setForeground(new java.awt.Color(51, 51, 51));
         btnExpediente.setText("Expedientes");
         btnExpediente.setBorderPainted(false);
+        btnExpediente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnExpedienteMouseClicked(evt);
+            }
+        });
         pnlIzq.add(btnExpediente);
 
         btnConsulta.setForeground(new java.awt.Color(51, 51, 51));
@@ -93,13 +97,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
         pnlIzq.add(btnUsuarios);
 
         pnlDer.setBackground(new java.awt.Color(255, 255, 255));
-        pnlDer.setLayout(new javax.swing.BoxLayout(pnlDer, javax.swing.BoxLayout.PAGE_AXIS));
+        pnlDer.setLayout(new java.awt.CardLayout());
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel2.setPreferredSize(new java.awt.Dimension(800, 800));
-        pnlDer.add(jLabel2);
+        pnlDer.add(jLabel2, "card2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,6 +144,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_formFocusGained
 
     private void btnConsultaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConsultaMouseClicked
+        pnlCosultaMedica.cargar();
         pnlCosultaMedica.setBounds(0, 0, pnlDer.getWidth(),
                 pnlDer.getHeight()); 
         pnlDer.removeAll();
@@ -152,23 +157,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
         UsuariosDialog usuariosDialog = new UsuariosDialog(this, true);
         usuariosDialog.setVisible(true);
     }//GEN-LAST:event_btnUsuariosMouseClicked
-       
-    public static void main(String args[]) {
-        try {
-//            UIManager.setLookAndFeel(new FlatMacLightLaf());
-            FlatGrayIJTheme.setup();
-            LoginFrame.setDefaultLookAndFeelDecorated( true );
-            FlatAnimatedLafChange.showSnapshot();
-        } catch (Exception ex) {
-            System.err.println("Fallo al inicializar el tema.");
-        }
-//        FlatAnimatedLafChange.showSnapshot();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PrincipalFrame().setVisible(true);
-            }
-        });
-    }
+
+    private void btnExpedienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExpedienteMouseClicked
+        pnlHistorialPanel.setBounds(0, 0, pnlDer.getWidth(),
+                pnlDer.getHeight()); 
+        pnlDer.removeAll();
+        pnlDer.add(pnlHistorialPanel);
+        pnlDer.revalidate();
+        pnlDer.repaint();
+    }//GEN-LAST:event_btnExpedienteMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsulta;

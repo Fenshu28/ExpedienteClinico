@@ -7,26 +7,21 @@
 
 package entity;
 
-import java.util.Date;
+import java.util.List;
 
 public class HistorialMedico {
     private int idHistorial; 
     private Expediente expediente;
-    private Date fechaVisita;
-    private String diagnostico; 
-    private String tratamiento;
-    private String notasAdicionales;
+    private List<Interaccion> visitas;
 
     public HistorialMedico() {
     }
 
-    public HistorialMedico(int idHistorial, Expediente expediente, Date fechaVisita, String diagnostico, String tratamiento, String notasAdicionales) {
+    public HistorialMedico(int idHistorial, Expediente expediente,
+            List<Interaccion> visitas) {
         this.idHistorial = idHistorial;
         this.expediente = expediente;
-        this.fechaVisita = fechaVisita;
-        this.diagnostico = diagnostico;
-        this.tratamiento = tratamiento;
-        this.notasAdicionales = notasAdicionales;
+        this.visitas = visitas;
     }
 
     public int getIdHistorial() {
@@ -45,38 +40,11 @@ public class HistorialMedico {
         this.expediente = expediente;
     }
 
-    public Date getFechaVisita() {
-        return fechaVisita;
+    public List<Interaccion> getVisitas() {
+        return visitas;
     }
 
-    public void setFechaVisita(Date fechaVisita) {
-        this.fechaVisita = fechaVisita;
+    public void setVisitas(List<Interaccion> visitas) {
+        this.visitas = visitas;
     }
-
-    public String getDiagnostico() {
-        return diagnostico;
-    }
-
-    public void setDiagnostico(String diagnostico) {
-        this.diagnostico = diagnostico;
-    }
-
-    public String getTratamiento() {
-        return tratamiento;
-    }
-
-    public void setTratamiento(String tratamiento) {
-        this.tratamiento = tratamiento;
-    }
-
-    public String getNotasAdicionales() {
-        return notasAdicionales;
-    }
-
-    public void setNotasAdicionales(String notasAdicionales) {
-        this.notasAdicionales = notasAdicionales;
-    }
-    
-    
-    
 }
