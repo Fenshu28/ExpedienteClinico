@@ -28,7 +28,7 @@ public class ConsultaMedicaModelImpl implements IConsultaMedicaModel {
         con = new Conexion(DatosConfig.getUsuario(),
             DatosConfig.getContraseña());
         Connection conQuery = con.getConnection();
-        String consulta = "INSERT INTO ConsutaMedica VALUES (DEFAULT,?,?,?,?,?,?)";        
+        String consulta = "INSERT INTO ConsultaMedica VALUES (DEFAULT,?,?,?,?,?,?)";        
 
         try {
             PreparedStatement pstmt = conQuery.prepareStatement(consulta);

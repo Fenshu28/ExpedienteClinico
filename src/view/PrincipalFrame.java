@@ -46,7 +46,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 formFocusGained(evt);
             }
         });
-        getContentPane().setLayout(new org.jdesktop.swingx.HorizontalLayout());
+        getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
         pnlIzq.setBackground(new java.awt.Color(59, 194, 222));
         pnlIzq.setPreferredSize(new java.awt.Dimension(200, 150));

@@ -329,8 +329,12 @@ public final class ConsultaMedicaPanel extends javax.swing.JPanel {
      * de datos.
      */
     public void prepararDatos(){
+        consulta.setMedico(DatosTemp.getMedicoActual());
+        consulta.setExpediente(listaExpedientes.get(
+                cmbExpediente.getSelectedIndex()));
         consulta.setSintomas(txtSintomas.getText());
         consulta.setNotasAdicionales(txtNotas.getText());
+        consulta.setFecha(dtpFecha.getDate());
         for (int i = 0; i < modeloTabla.getRowCount(); i++) {
             listaTratamientos.get(i).setDosis(
                     modeloTabla.getValueAt(i, 1).toString()
