@@ -4,25 +4,30 @@
  * Descripción: Vista para el loggeo del personal al
     sistema.
  **************************************************** */
-
 package view;
-
 
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.intellijthemes.FlatGrayIJTheme;
 import controller.LoginController;
+import controller.MedicoController;
 import entity.DatosConfig;
+import entity.DatosTemp;
+import entity.Medico;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginFrame extends javax.swing.JFrame {
+
     private LoginController controlador = new LoginController();
-    private DatosConfig config;
-    
+    private MedicoController medicoController = new MedicoController();
+    private List<Medico> listaMedicos = new ArrayList<>();
+
     public LoginFrame() {
         initComponents();
-        config = new DatosConfig();
-        
-        txtContraseña.putClientProperty("JPasswordField.showRevealButton", 
+        new DatosConfig();
+
+        txtContraseña.putClientProperty("JPasswordField.showRevealButton",
                 true);
         txtContraseña.putClientProperty("JPasswordField.showCapsLock",
                 true);
@@ -146,41 +151,46 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAccederActionPerformed
 
     private void txtUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyPressed
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER)
             acceder();
     }//GEN-LAST:event_txtUsuarioKeyPressed
 
     private void txtContraseñaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseñaKeyPressed
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER)
             acceder();
     }//GEN-LAST:event_txtContraseñaKeyPressed
 
-    private void acceder(){
-        if(controlador.iniciarSesion(txtUsuario.getText(),
-                String.copyValueOf(txtContraseña.getPassword()))){  
-            
-            config = new DatosConfig(txtUsuario.getText(),
-                    String.copyValueOf( txtContraseña.getPassword()));
+    private void acceder() {
+        if (controlador.iniciarSesion(txtUsuario.getText(),
+                String.copyValueOf(txtContraseña.getPassword()))) {
+
+            new DatosConfig(txtUsuario.getText(),
+                    String.copyValueOf(txtContraseña.getPassword()));
+            new DatosTemp();
+            medicoController.mostrarRegistros(listaMedicos);
+            DatosTemp.setMedicoActual(
+                    medicoController.recuperarRegistro(listaMedicos,
+                            "M12345678901"));
             this.setVisible(false);
             PrincipalFrame formulario = new PrincipalFrame();
             formulario.setVisible(true);
         }
     }
-    
+
     public static void main(String args[]) {
         try {
             FlatGrayIJTheme.setup();
-            LoginFrame.setDefaultLookAndFeelDecorated( 
-                    true );
-            MedicoFrame.setDefaultLookAndFeelDecorated( 
-                    true );
+            LoginFrame.setDefaultLookAndFeelDecorated(
+                    true);
+            MedicoFrame.setDefaultLookAndFeelDecorated(
+                    true);
             PacienteFrame.setDefaultLookAndFeelDecorated(
-                true);
+                    true);
             FlatAnimatedLafChange.showSnapshot();
         } catch (Exception ex) {
             System.err.println("Fallo al inicializar el tema.");
         }
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new LoginFrame().setVisible(true);

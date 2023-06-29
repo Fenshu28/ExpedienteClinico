@@ -7,11 +7,19 @@
 
 package view;
 
+import controller.MedicoController;
+import entity.DatosTemp;
+import entity.Medico;
+import java.util.ArrayList;
+import java.util.List;
+
 public class PrincipalFrame extends javax.swing.JFrame {
-    MedicoFrame ventanaMedico= new MedicoFrame(this,true);
-    PacienteFrame ventanaPaciente= new PacienteFrame(this,true);
-    ConsultaMedicaPanel pnlCosultaMedica= new ConsultaMedicaPanel(PrincipalFrame.this);
-    HistorialPanel pnlHistorialPanel = new HistorialPanel();
+    private MedicoFrame ventanaMedico= new MedicoFrame(this,true);
+    private PacienteFrame ventanaPaciente= new PacienteFrame(this,true);
+    private ConsultaMedicaPanel pnlCosultaMedica= new ConsultaMedicaPanel(PrincipalFrame.this);
+    private HistorialPanel pnlHistorialPanel = new HistorialPanel();
+    
+    
     
     public PrincipalFrame() {
         initComponents();
@@ -27,7 +35,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         btnMedico = new javax.swing.JButton();
         btnExpediente = new javax.swing.JButton();
         btnConsulta = new javax.swing.JButton();
-        btnUsuarios = new javax.swing.JButton();
         pnlDer = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -39,6 +46,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 formFocusGained(evt);
             }
         });
+        getContentPane().setLayout(new org.jdesktop.swingx.HorizontalLayout());
 
         pnlIzq.setBackground(new java.awt.Color(59, 194, 222));
         pnlIzq.setPreferredSize(new java.awt.Dimension(200, 150));
@@ -86,15 +94,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         });
         pnlIzq.add(btnConsulta);
 
-        btnUsuarios.setForeground(new java.awt.Color(51, 51, 51));
-        btnUsuarios.setText("Usuarios");
-        btnUsuarios.setBorderPainted(false);
-        btnUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnUsuariosMouseClicked(evt);
-            }
-        });
-        pnlIzq.add(btnUsuarios);
+        getContentPane().add(pnlIzq);
 
         pnlDer.setBackground(new java.awt.Color(255, 255, 255));
         pnlDer.setLayout(new java.awt.CardLayout());
@@ -105,23 +105,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jLabel2.setPreferredSize(new java.awt.Dimension(800, 800));
         pnlDer.add(jLabel2, "card2");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlIzq, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(pnlDer, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlIzq, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
-                    .addComponent(pnlDer, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-        );
+        getContentPane().add(pnlDer);
 
         pack();
         setLocationRelativeTo(null);
@@ -129,12 +113,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void btnPacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPacienteMouseClicked
         ventanaPaciente.setVisible(true);
-//        this.setEnabled(false);
     }//GEN-LAST:event_btnPacienteMouseClicked
 
     private void btnMedicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMedicoMouseClicked
         ventanaMedico.setVisible(true);
-//        this.setEnabled(false);
     }//GEN-LAST:event_btnMedicoMouseClicked
 
     private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
@@ -153,11 +135,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         pnlDer.repaint();
     }//GEN-LAST:event_btnConsultaMouseClicked
 
-    private void btnUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsuariosMouseClicked
-        UsuariosDialog usuariosDialog = new UsuariosDialog(this, true);
-        usuariosDialog.setVisible(true);
-    }//GEN-LAST:event_btnUsuariosMouseClicked
-
     private void btnExpedienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExpedienteMouseClicked
         pnlHistorialPanel.setBounds(0, 0, pnlDer.getWidth(),
                 pnlDer.getHeight()); 
@@ -172,7 +149,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnExpediente;
     private javax.swing.JButton btnMedico;
     private javax.swing.JButton btnPaciente;
-    private javax.swing.JButton btnUsuarios;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel pnlDer;
     private javax.swing.JPanel pnlIzq;

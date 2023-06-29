@@ -12,7 +12,7 @@ import entity.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import util.Util;
@@ -31,7 +31,6 @@ public final class ConsultaMedicaPanel extends javax.swing.JPanel {
     
     private final ExpedienteController expedienteController = new ExpedienteController();
     private final FarmacoController farmacoController = new FarmacoController();
-    private final TratamientoController tratamientoController = new TratamientoController();
     private final DiagnosticoController diagnosticoController = new DiagnosticoController();
     private final ConsultaMedicaController consultaController = new ConsultaMedicaController();
     
@@ -40,8 +39,7 @@ public final class ConsultaMedicaPanel extends javax.swing.JPanel {
         this.framePadre = framePadre;
         cargar();
         nuevo();
-//        TableColumn column = tblFarmaco.getColumnModel().getColumn(0);
-//        column.setCellEditor(new DefaultCellEditor(comboFarmaco()));
+        txtMedico.setText(DatosTemp.getMedicoActual().getNombreCompleto());
         modeloTabla = (DefaultTableModel) tblFarmaco.getModel();
     }
 
@@ -129,6 +127,7 @@ public final class ConsultaMedicaPanel extends javax.swing.JPanel {
         );
 
         txtMedico.setEditable(false);
+        txtMedico.setText("D");
         txtMedico.setName(""); // NOI18N
 
         flatLabel1.setText("Sintomas:");
@@ -196,6 +195,7 @@ public final class ConsultaMedicaPanel extends javax.swing.JPanel {
         txtSintomas.setRows(5);
         jScrollPane5.setViewportView(txtSintomas);
 
+        txtDiagnostico.setEditable(false);
         txtDiagnostico.setColumns(20);
         txtDiagnostico.setRows(5);
         jScrollPane6.setViewportView(txtDiagnostico);
@@ -309,47 +309,41 @@ public final class ConsultaMedicaPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAñadirFarmacoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        nuevo();
-//        if(util.Util.validCamposLlenos(this) && modeloTabla.getRowCount()>0){
-//            nuevo();
-//        }else{
-//            JOptionPane.showMessageDialog(this, 
-//                    "Completa todos los campos.", 
-//                    "Error al guardar", 
-//                    JOptionPane.WARNING_MESSAGE);
-//        }
+        if(util.Util.validCamposLlenos(this) && 
+                modeloTabla.getRowCount()>0){
+            
+            prepararDatos();
+            consultaController.agregarRegistro(consulta,
+                    listaTratamientos);
+            nuevo();
+        }else{
+            JOptionPane.showMessageDialog(this, 
+                    "Completa todos los campos.", 
+                    "Error al guardar", 
+                    JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
-
+    
     /**
      * Completas los atributos ed la clase consulta antes de insertar en la base
      * de datos.
-     * @return 
-     * El objeto {@link ConsultaMedica} ya completo y listo para insertar en la 
-     * base de datos.
      */
-    private ConsultaMedica crearConsulta(){
-        
-        return null;
-    }
-    
-    /**
-     * Crea un combo box co
-     * @return 
-     */
-    private JComboBox<String> comboFarmaco(){
-        JComboBox<String> cmbFarmaco = new JComboBox<>();
-        cmbFarmaco.setEditable(true);
-        AutoCompleteDecorator.decorate(cmbFarmaco);
-        
-        for (Farmaco farmaco : listaFarmacos) {
-            cmbFarmaco.addItem(farmaco.getMarcaRegistrada() + " (" 
-                    + farmaco.getPrinicipioAct() + ") " 
-                    + farmaco.getPresentacion());
+    public void prepararDatos(){
+        consulta.setSintomas(txtSintomas.getText());
+        consulta.setNotasAdicionales(txtNotas.getText());
+        for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+            listaTratamientos.get(i).setDosis(
+                    modeloTabla.getValueAt(i, 1).toString()
+            );
+            listaTratamientos.get(i).setFrecuencia(
+                    modeloTabla.getValueAt(i, 2).toString()
+            );
+            listaTratamientos.get(i).setDuracion(
+                    modeloTabla.getValueAt(i, 3).toString()
+            );
         }
-        
-        return cmbFarmaco;
     }
-    
+       
     /**
      * Llena los combo box necesarios con la información de las listas.
      */

@@ -9,7 +9,6 @@ package controller;
 
 import entity.Medico;
 import java.util.List;
-import javax.swing.table.DefaultTableModel;
 import model.IMedicoModel;
 import model.MedicoModelImpl;
 
